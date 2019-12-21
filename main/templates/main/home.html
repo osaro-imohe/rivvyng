@@ -1,0 +1,168 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/home.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Here</title>
+  </head>
+  <body>
+    <div id="header">
+      <a id="rivvylink" href="{%url 'main:home'%}">
+        <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+      </a>
+      {% if request.user.is_authenticated%}
+      <div id="hold" class="row">
+        <a href="{%url 'main:account'%}" class="maga">
+          <div class="options">
+            <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
+          </div>
+        </a>
+        <a href="{%url 'main:cart'%}" class="maga">
+          <div class="options">
+            <div class="numberofitemsincart">
+              <p>{{ numberofitemsincart}}</p>
+            </div>
+            <img class="holders" src="{% static 'main/images/shopping-bag.svg'%}" alt="">
+          </div>
+        </a>
+      </div>
+      {%elif not request.user.is_authenticated%}
+      <div class="loginhold">
+          <div class="signup">
+              <a href="{% url 'main:signup' %}">
+                <p class="krunk">SIGN UP</p>
+              </a>
+          </div>
+          <div class="login">
+            <a href="{% url 'main:login'%}">
+              <p class="krunk">LOG IN</p>
+            </a>
+          </div>
+      </div>
+      {%endif%}
+    </div>
+    <div class="container" id="subercontain">
+      <div class="row" style = "height:100% !important;">
+        <div id="right" class="col-sm-12 col-lg-6">
+          <img id="orderanything" class="col-sm-10" src="{% static 'main/images/orderanything.png'%}" alt="">
+        </div>
+          <div id="left" class="col-sm-12 col-lg-6" >
+            <div class="responsivebox col-sm-12 col-lg-12">
+              <p id="want" class="col-sm-12">We bring the store to your door.</p>
+              <p id="entice" class="col-sm-12">Find out what a difference same-day delivery can make in your life.</p>
+              <form id="solo" class="row"  method="post">
+                {%csrf_token%}
+                <input  class="invisible" id="lng" type="text" name="lng" value="" placeholder="">
+                <input  class="invisible" id="lat" type="text" name="lat" value="" placeholder="">
+                <div class="col-sm-12 col-lg-12 row" id="narc">
+                  <input class="col-sm-12 col-lg-10" id="search" type="text" name="location" value="" placeholder="Enter your address">
+                  <button class="col-sm-12 col-lg-2" type="submit" id="submit" name="button">GO</button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+
+      <div class="howitworkscontainer col-sm-12">
+        <div class="container" id="container">
+          <div class="searchcontainer row col-sm-12">
+            <div class="searchcontainertext col-sm-12 col-lg-4">
+              <div class="contentbox">
+                <p class="uppertext">Check for items</p>
+                <p class="lowertext">Order fresh produce, meat, and more from your local store using our app or website.</p>
+              </div>
+            </div>
+            <div class="d-none d-lg-block searchcontainerimage col-sm-12 col-lg-8" style="background-image:url({%static 'main/images/serchcontainerimage.png' %});" ></div>
+          </div>
+        </div>
+        <div class="container" id="container">
+          <div class="searchcontainer row col-sm-12">
+          <div class=" d-none d-lg-block searchcontainerimage col-sm-12 col-lg-8" style="background-image:url({%static 'main/images/secondsearchcontainerimage.png' %});" ></div>
+            <div class="searchcontainertext col-sm-12 col-lg-4">
+              <div class="contentbox">
+                <p class="uppertext">Checkout your items</p>
+                <p class="lowertext">Connect with your shopper via text to make adjustments and get live updates from the aisles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container" id="container">
+          <div class="searchcontainer row col-sm-12">
+            <div class="searchcontainertext col-sm-12 col-lg-4" id="searchcontainertextedit">
+              <div class="contentbox">
+                <p class="uppertext" id="uppertextedit">Checkout your items</p>
+                <p class="lowertext" id="lowertextedit">Connect with your shopper via text to make adjustments and get live updates from the aisles.</p>
+              </div>
+            </div>
+            <div class="d-none d-lg-block searchcontainerimage col-sm-12 col-lg-8" style="background-image:url({%static 'main/images/secondsearchcontainerimage.png' %});" ></div>
+          </div>
+        </div>
+        </div>
+        <div class="container">
+          <div class="wowpop col-sm-12">
+            <div class="row" id="ooga">
+              <div class="wowpopupleftcontainer col-sm-12 col-lg-6">
+                <div class="wowpopupleft col-sm-12">
+                  <div class="col-sm-12">
+                    <p id="ooooo">Get free delivery on purchases of over ₦5000</p>
+                    <p id="oooo">With Unlimited, you get free delivery with no blitz pricing or small cart fees – ever. Try it free with a 7-day free trial, cancel anytime.</p>
+                  </div>
+              </div>
+              </div>
+              <div class="wowpopurrightcontainer d-none d-lg-block col-sm-12 col-lg-6">
+                <div class="wowpopupright col-sm-12">
+                  <img class="col-sm-8" id="wowpopupimage" src="{% static 'main/images/wowpopupimage.png'%}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="ready col-sm-12">
+            <p id="readytext">Ready to order?</p>
+            <div class="row">
+              <div  class="readybuttondiv col-sm-12 col-lg-6">
+                  <a href="{% url 'main:login' %}"><button class="readybuttons col-sm-12" id="loginbutton" type="button" name="button">Login</button></a>
+              </div>
+              <div class="readybuttondiv col-sm-12 col-lg-6">
+                <a href="{% url 'main:signup' %}">
+                  <button class="readybuttons col-sm-12" id="signupbutton" type="button" name="button">Signup</button>
+                </a>
+              </div>
+
+
+          </div>
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function activatePlacesSearch(){
+        var input = document.getElementById('search');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function() {
+
+                    // Get place info
+                    var place = autocomplete.getPlace();
+                    console.log(place.address_components);
+                    // Do whatever with the value!
+                    document.getElementById("lat").setAttribute('value',place.geometry.location.lat());
+                    document.getElementById("lng").setAttribute('value',place.geometry.location.lng());
+                });
+      }
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdzDBOcdNaYjQeSZeSSvxnRsKKCgMyKQ&libraries=places&callback=activatePlacesSearch"></script>
+    <script type="text/javascript" src="{%static 'main/home.js'%}"></script>
+  </body>
+</html>

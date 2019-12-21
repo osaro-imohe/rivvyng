@@ -1,0 +1,147 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/checkout.css' %}">
+    <title> </title>
+  </head>
+  <body>
+    <div id="containagain" class="col-sm-12 row">
+      <a id="rivvylink" href="{%url 'main:home'%}">
+        <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+      </a>
+      <div id="header">
+        <div id="hold" class="row">
+          <a href="{%url 'main:account'%}" id="plug">
+            <div class="options">
+              <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
+            </div>
+          </a>
+        </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="checkoutheader col-sm-12">
+          <p id="checkoutheadertext">Checkout</p>
+        </div>
+        <div class="row" id="nut">
+          <form class="col-sm-12 col-lg-6" id="form"  method="post">
+            <script src="https://js.paystack.co/v1/inline.js"></script>
+            <div class="col-sm-12" id="addressdivcontainer">
+              <div id="addressdiv" class="col-sm-12">
+                <p class="cowboy">Delivery Address</p>
+                <div id="address" class="inputs col-sm-12">
+                  <input type="text" class="inputs col-sm-12 input" placeholder="Address" name="" value="">
+                  <input type="text" class="inputs col-sm-12 input" name="" value="" placeholder="Apt number or company name">
+                  <div class="row" id="botbot">
+                    <div class="col-sm-6 rowinputcontainer">
+                      <input type="text" id="left" class="inputs col-sm-12" placeholder="Contact name" name="" value="">
+                    </div>
+                    <div class="col-sm-6 rowinputcontainer">
+                      <input type="text" id="right" class="inputs col-sm-12" placeholder="Phone Number" name="" value="">
+                    </div>
+                  </div>
+                  <textarea id="textarea" name="name" class="col-sm-12 input" rows="8" cols="80" placeholder="Add any delivery instructions (e.g. 'Knock when you arrive.')"></textarea>
+                </div>
+                <p class="cowboy2">Time</p>
+                <div id="timediv" class="col-sm-12">
+                  <p>As soon as possible(25-40mins)</p>
+                </div>
+                <p class="cowboy2">Payment</p>
+                <div id="paymentsdiv col-sm-12">
+                  <button type="button" name="button" class="col-sm-12" id="paymentbutton" onclick="payWithPaystack()">Pay With Card</button>
+                </div>
+                <p id="breaker">OR</p>
+                <div id="paymentsdiv2 col-sm-12">
+                  <button type="button" name="button" class="col-sm-12" id="paymentbutton2" >Pay With Cash</button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="col-sm-12 col-lg-6 order-first order-lg-2" id="cartdivcontainer">
+            <div class="col-sm-12" id="cartdiv">
+              {% if cartitems %}
+              <div id="map" class="col-sm-12"></div>
+              <p id="takeoff">{{store.store_name}}</p>
+                {% for item in cartitems%}
+                  <div class="itemdiv col-sm-12">
+                    <div class="row" id="megatron">
+                      <p class="itemquantity">{{item.quantity}}&nbspx</p>
+                      <p class="itemname">&nbsp{{item.product.name}}</p>
+                      <p class="itemprice">₦{% widthratio item.quantity 1 item.product.price %}</p>
+                    </div>
+                    <div class="removediv">
+                      <a href="/remove/checkout/{{item.product.id}}">
+                        <p class="remove">Remove</p>
+                      </a>
+                    </div>
+                  </div>
+                {%endfor%}
+                <div class="totalprice">
+                  <p>{{ totalprice }}</p>
+                </div>
+              {% elif not cartitems %}
+                <p>no items in cart</p>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+              function initMap() {
+                var uluru = {lat: {{store.store_lat}}, lng: {{store.store_lng}} };
+                var map = new google.maps.Map(
+                  document.getElementById('map'), {zoom: 15, center: uluru,});
+                  var marker = new google.maps.Marker({position: uluru, map: map});}
+
+              function payWithPaystack(){
+                var handler = PaystackPop.setup({
+                  key: 'pk_test_7c6919f41d4c3c4b016135737f6165748965fe9c',
+                  email: '{{email}}',
+                  amount: {{totalprice}} + "00",
+                  currency: "NGN",
+                  ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                  metadata: {
+                     custom_fields: [
+                        {
+                            display_name: "Name",
+                            variable_name: "Name",
+                            value: "{{ first_name }} {{last_name}}"
+                        },
+                        {
+                            display_name: "Email",
+                            variable_name: "Email",
+                            value: "{{ email }}"
+                        },
+                        // {
+                        //     display_name: "Items",
+                        //     variable_name: "Items",
+                        //     value: "{{ product_list }}"
+                        // }
+                     ]
+                  },
+                  callback: function(response){
+                      alert('success. transaction ref is ' + response.reference);
+                  },
+                  onClose: function(){
+                      alert('window closed');
+                  }
+                });
+                handler.openIframe();
+              }
+      </script>
+      <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdzDBOcdNaYjQeSZeSSvxnRsKKCgMyKQ&callback=initMap"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>

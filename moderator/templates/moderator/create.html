@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'moderator/css/create.css' %}">
+
+    <title>Create a new store</title>
+  </head>
+  <body>
+    <img id="store" src="{% static 'moderator/images/store.svg'%}" alt="">
+    <h1>Create a new store</h1>
+    <div class="info">
+      <img id="lightbulb" src="{%static 'moderator/images/lightbulb.svg'%}" alt="">
+      <p id="infonote">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <form class=""  enctype="multipart/form-data" method="post">
+      {%csrf_token%}
+      <input class="field" type="text" name="name" placeholder="Name" value="">
+      <input class="field" id="search" type="text" name="location" value="" placeholder="Store Location">
+      <input  id="lat" type="text" name="lat" value="" placeholder="Lat">
+      <input  id="lng" type="text" name="lng" value="" placeholder="Lng">
+      <input  id="address" type="text" name="address" value="" placeholder="address">
+      <select  id="category" class="field" name="category" placeholder="category">
+          <option selected="">Please Select</option>
+          <option value="phonesandtablets">phonesandtablets</option>
+          <option value="computers">computers</option>
+          <option value="electronics">electronics</option>
+          <option value="fashion">fashion</option>
+          <option value="healthandbeauty">health and beauty</option>
+          <option value="gaming">gaming</option>
+          <option value="grocery">grocery</option>
+          <option value="restaurants">restaurants</option>
+          <option value="homeanddecor">homeanddecor</option>
+      </select>
+      <input class="field" type="text" name="opentime" placeholder="Opening time" value="">
+      <input class="field" type="text" name="closetime" placeholder="Closing time" value="">
+      <input class="field" type="file" name="image" value="">
+      <button  class="field" type="submit" id="submitbutton" name="button">Submit</button>
+      <p style="color:red; font-weight:800;">{{ error_message }}</p>
+    </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      function activatePlacesSearch(){
+        var input = document.getElementById('search');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function() {
+
+                    // Get place info
+                    var place = autocomplete.getPlace();
+
+                    // Do whatever with the value!
+
+                    document.getElementById("lat").setAttribute('value',place.geometry.location.lat());
+                    document.getElementById("lng").setAttribute('value',place.geometry.location.lng());
+
+                });
+      }
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdzDBOcdNaYjQeSZeSSvxnRsKKCgMyKQ&libraries=places&callback=activatePlacesSearch"></script>
+  </body>
+</html>

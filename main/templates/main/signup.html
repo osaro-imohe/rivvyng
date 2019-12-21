@@ -1,0 +1,68 @@
+{%load static%}
+{% load socialaccount %}
+{% providers_media_js %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/signup.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Login</title>
+  </head>
+  <body>
+    <a id="rivvylink" href="{%url 'main:home'%}">
+      <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+    </a>
+
+
+
+
+    <div class="contain col-sm-12 col-lg-3">
+      <h1>Sign up for free</h1>
+      <p id="h2">Get started with same day item delivery.</p>
+      <form class=""  method="POST">
+        {% csrf_token %}
+        <a   href="{% provider_login_url "facebook" method="js_sdk"%}">
+          <div class="col-sm-12" id="submit2">
+            <p id="innertext">Sign up with Facebook</p>
+          </div>
+        </a>
+        <p class="bump">First Name</p>
+        <input class="inputs col-sm-12" type="text" name="first_name" placeholder="First Name" value="" id="first_name">
+        <p class="bump">Last Name</p>
+        <input class="inputs col-sm-12" type="text" name="last_name" placeholder="Last Name" value="" id="last_name">
+        <p class="bump">Email Address</p>
+        <input class="inputs col-sm-12" type="email" name="email" placeholder="Email Address" value="" id="email">
+        <p class="bump">Password</p>
+        <input class=" inputs col-sm-12" type="password" name="password" placeholder="Password" value="" id="password">
+        <button class="col-sm-12" type="submit" id="submit" name="button"><p id="innertext">Sign up with email</p></button>
+        <div class="row mugumugu">
+          <div class="">
+            <p id="left">Already have an account?</p>
+          </div>
+          <div class="">
+            <a href="{% url 'main:login' %}">
+              <p id="right">&nbspLogin</p>
+            </a>
+          </div>
+        </div>
+        <p id="error">{{error_message2}}</p>
+      </form>
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

@@ -1,0 +1,43 @@
+html{ margin:0; padding:0; height:100%; width:100%; overflow:hidden;}
+body{
+  margin:0;
+  padding:0;
+  height:100%;
+  width:100%;
+  overflow-y: scroll;
+  color: black;
+  text-align: center;
+  align-items: center !important;
+  overflow:scroll;
+}
+h1{
+  font-size: 15px;
+  font-weight: 600;
+}
+#manageproducts{
+  width: 50px;
+  height: 50px;
+  margin-top: 50px;
+}
+#button{
+  height: 50px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: lightblue;
+  font-weight: 800;
+  color: white;
+  border: none;
+  margin-top: 5%;
+}
+#button2{
+  height: 50px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: lightgreen;
+  font-weight: 800;
+  color: white;
+  border: none;
+  margin-top: 2.0%;
+}

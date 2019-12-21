@@ -1,0 +1,67 @@
+html{ margin:0; padding:0; height:100%; width:100%; overflow:hidden;}
+body{
+  margin:0;
+  padding:0;
+  height:100%;
+  width:100%;
+  overflow-y: scroll;
+  color: black;
+  text-align: center;
+  align-items: center !important;
+  overflow:scroll;
+}
+
+#store{
+  margin-top: 100px;
+  width: 50px;
+  height: 50px;
+}
+.field{
+  width: 60%;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+h1{
+  font-size: 20px;
+  font-weight: 700;
+  color: black;
+}
+#submitbutton{
+  height: 50px;
+  background-color: lightgreen;
+  border: none;
+  font-weight: 600;
+  color: white;
+}
+#lat{
+  display: none !important;
+  visibility: hidden !important;
+}
+#lng{
+  display: none !important;
+  visibility: hidden !important;
+}
+#address{
+  display: none !important;
+  visibility: hidden !important;
+}
+.info{
+  width: 60%;
+  border: 1px solid gray;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+  padding: 10px;
+}
+#lightbulb{
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px !important;
+}
+#infonote{
+  font-size: 10px;
+  color: gray;
+  weight:600;
+}

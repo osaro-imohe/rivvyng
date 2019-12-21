@@ -1,0 +1,45 @@
+html{ margin:0; padding:0; height:100%; width:100%; overflow:hidden;}
+body{
+  margin:0;
+  padding:0;
+  height:100%;
+  width:100%;
+  overflow-y: scroll;
+  color: black;
+  text-align: center;
+  align-items: center !important;
+  overflow:scroll;
+}
+
+h1{
+  margin-top: 60px;
+  font-size: 25px;
+}
+
+.image{
+  width: 80px;
+}
+.it{
+  margin-left: 10px !important;
+}
+.chunk{
+  border: 1px solid lightgray;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top: 7px;
+  border-radius: 7px;
+}
+.chunk2{
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  margin-right: 10px;
+}
+.chunkone{
+
+}
+.chunktwo{
+  margin-left: 10px;
+}

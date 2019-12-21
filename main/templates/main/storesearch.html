@@ -1,0 +1,109 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/storesearch.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/three-dots.min.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript" src="{%static 'main/js/'%}"></script> -->
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'main/js/infinite.min.js' %}"></script>
+  <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="completecontain col-sm-12">
+      <div id="header" class="col-sm-12 row">
+        <a id="rivvylink" href="{%url 'main:home'%}">
+          <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+        </a>
+        <div id="hold" class="row">
+          <a href="#" class="maga">
+            <div class="options">
+              <img class="holders" src="{% static 'main/images/search.svg'%}" alt="">
+            </div>
+          </a>
+          <a href="{%url 'main:account'%}" class="maga">
+            <div class="options">
+              <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
+            </div>
+          </a>
+          <a href="{%url 'main:cart'%}" class="maga">
+            <div class="options">
+              <div class="numberofitemsincart">
+                <p>{{ numberofitemsincart}}</p>
+              </div>
+              <img class="holders" src="{% static 'main/images/shopping-bag.svg'%}" alt="">
+            </div>
+          </a>
+        </div>
+        </div>
+      <div id="mainimagecontainer" class="col-sm-12">
+        <p id="filterbycategoryheader">{{storesearchquery}}</p>
+      </div>
+        <div id="fix" class="infinite-container row col-sm-12">
+
+          {% if queryset is not none %}
+          {% for query in queryset %}
+            <div class="infinite-item col-sm-12 col-lg-4" >
+              <div class="query col-sm-12" >
+                <a href="/feed/{{query.slug}}-{{query.pk}}">
+                  <div class="storeimage col-sm-12" style="background-image: url({{query.store_image.store_image.url}});"  ></div>
+                  <p class="bump" id="subheader">{{ query.store_name }}</p>
+                  <p class="bump" id="sub">{{ query.store_location }}</p>
+                  <p class="bump" id="sub">Opens: {{ query.store_open }}</p>
+                  <p class="bump" id="sub">Closes: {{ query.store_close }}</p>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% elif queryset is None or '' %}
+        <div class="queryerror col-sm-9">
+          <h1>You do not have any stores near you!</h1>
+        </div>
+        {% else %}
+        <div class="queryerror col-sm-9">
+          <h1>You do not have any stores near you!</h1>
+        </div>
+          {% endif %}
+
+
+
+
+
+          <div class="loading" style="display: none;">
+            <div class="dot-pulse"></div>
+          </div>
+          {% if queryset.has_next %}
+            <a class="infinite-more-link" href="?page={{ queryset.next_page_number }}"></a>
+          {% endif %}
+      </div>
+    </div>
+
+      <script>
+          var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            onBeforePageLoad: function () {
+              $('.loading').show();
+            },
+            onAfterPageLoad: function ($items) {
+              $('.loading').hide();
+            }
+          });
+  </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  </body>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+
+</html>

@@ -1,0 +1,157 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/storeinfo.css' %}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{%static 'main/js/storeinfo.js'%}"></script>
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
+    <title>Hello, world!</title>
+  </head>
+  <body id="body">
+    <div id="containagain" class="col-sm-12 row">
+      <a id="rivvylink" href="{%url 'main:home'%}">
+        <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+      </a>
+      <div id="hold" class="row">
+        <a href="{%url 'main:account'%}">
+          <div class="options">
+            <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
+          </div>
+        </a>
+        <a href="{%url 'main:cart'%}">
+          <div class="options">
+            <div class="numberofitemsincart">
+              <p id="itemsincart">{{ numberofitemsincart }}</p>
+            </div>
+            <img class="holders" src="{% static 'main/images/shopping-bag.svg'%}" alt="">
+          </div>
+        </a>
+      </div>
+      </div>
+
+      <div class="col-sm-12" id="storeimage"  style="background-image: url({{query.store_image.store_image.url}});">
+          <p id="hide">{{query.pk}}</p>
+            <form id="gas" method="post">
+              {%csrf_token%}
+              <input type="hidden" id="query_id" name="query_id" value="">
+              <input type="hidden" id="query_product_id" name="query_product_id" value="">
+              <input type="hidden" id="query_product_quantity" name="query_product_quantity" value="">
+              <button id="hiddensubmitbutton" type="submit" name="button" class="col-sm-12"></button>
+            </form>
+          </div>
+      </div>
+      <div class="col-sm-12 col-lg-4"id="popup">
+        <div id="closebutton" onclick="closepopup()">
+          <div id="closebuttonleftbar"></div>
+          <div id="closebuttonrightbar"></div>
+        </div>
+        <h1 id="popupproductname"></h1>
+        <h1 id="popupproductdescription"></h1>
+        <div class="row col-sm-12" id="bump">
+          <div id="quantity" class="col-sm-5 ">
+            <div id="quantitybutton" class="col-sm-12">
+              <div class="row col-sm-12" id="rowyourboat">
+                <button id="hmm" type="button" class="cont"  name="button" onclick="buyless()">-</button>
+                <div  class="cont">
+                    <p id="jiggy">1</p>
+                </div>
+                <button  id="pft" class="cont" type="button" name="button"  onclick="buymore()" >+</button>
+              </div>
+            </div>
+          </div>
+          <div id="checkout" class="col-sm-7">
+            <button id="checkoutbutton" class="col-sm-12" type="button" name="button" onclick="submitform()">
+              <p class="it" id="kurt">ADD TO CART</p>
+              <div class="row" id="finally">
+                <p class="it">₦</p>
+                <p class="it" id="itemprice"></p>
+              </div>
+
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="secondsubcontainer col-sm-12">
+        <div id="hiddenstorelocationdiv" class="d-block d-lg-none">
+          <div id="storelocationformobile" class="col-sm-12">
+            <p id="hiddenstorename">{{ query.store_name }}</p>
+            <p id="hiddenstorelocation">{{ query.store_location }}</p>
+          </div>
+        </div>
+        <div class="second">
+          <p class="d-none d-lg-block" id="name">{{ query.store_name }}</p>
+          <p class="d-none d-lg-block" id="location"><img id="deliver" src="{% static 'main/images/placeholder.svg'%}" alt="">{{ query.store_location }}</p>
+          <img class="holders" src="{% static 'main/images/search2.svg'%}" alt="">
+          <input id="search" class="col-sm-12 col-lg-6" type="text" name="" value="" placeholder="Search items" onkeyup="search()">
+        </div>
+        <div class="row" id="comatose">
+        {% for product in products%}
+        <span id="itemswrapper" class="col-sm-12 col-lg-4">
+          <div id="itemscontainer{{product.pk}}" class="itemscontainer col-sm-12" onClick="autobot(this.id)">
+            <div id="items{{product.pk}}" class="col-sm-12 items">
+              <img src="{{ product.product_image.url}}" class="image" alt="">
+              <p class="hidden" id="hide{{product.pk}}">{{product.pk}}</p>
+              <h3 id="title{{product.pk}}" class="title">{{product.name}}</h3>
+              <p id="description{{product.pk}}" class="description">{{product.description}}</p>
+              <p id="price{{product.pk}}" class="price">₦ {{product.price}}</p>
+            </div>
+          </div>
+        </span>
+
+        {% endfor %}
+        </div>
+      </div>
+      <div id="overlay" onclick="closepopup()"></div>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script>
+        $('#gas').submit(
+          function(e){
+            e.preventDefault();
+            $.ajax({
+              type:"POST",
+              url:'addtocart',
+              data:{
+                store_id : $('#query_id').val(),
+                product_id : $('#query_product_id').val(),
+                quantity : $('#query_product_quantity').val(),
+                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val(),
+              },
+              success:function(){
+                var numberofitemsincart = $('#itemsincart').text();
+                var updateditemnumber = parseInt(numberofitemsincart) + 1;
+                $('#itemsincart').text(updateditemnumber);
+                $('#popup').css("display","none");
+                $('#overlay').css("display","none");
+                $('#jiggy').text('1');
+              }
+            });
+          });
+
+          function search(){
+            searchbar = document.getElementById('search');
+            filter = searchbar.value.toUpperCase();
+            li = document.getElementsByTagName('span');
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("h3")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  li[i].style.display = "";
+                } else {
+                  li[i].style.display = "none";
+                }
+              }
+            }
+
+      </script>
+    </body>
+  </html>

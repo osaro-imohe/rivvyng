@@ -1,0 +1,229 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/feed.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/three-dots.min.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{%static 'main/js/feed.js'%}"></script>
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'main/js/infinite.min.js' %}"></script>
+  <title>Hello, world!</title>
+  </head>
+  <body>
+      {% if not queryset%}
+        <div class="queryerror col-sm-12">
+          <h1>You do not have any stores near you!</h1>
+        </div>
+        {% else%}
+        <div class="completecontain col-sm-12">
+          <div id="header" class="col-sm-12 row">
+            <div id="searchbardiv">
+              <div class="closediv" onclick="closesearchbardiv()">
+                <div id="closebarleft"></div>
+                <div id="closebarright"></div>
+              </div>
+              <form class=""  method="POST" id="searchform">
+                {%csrf_token%}
+                <input type="text" id="searchquery" name="searchquery" value="" placeholder="Search for a store">
+              </form>
+            </div>
+            <a id="rivvylink" href="{%url 'main:home'%}">
+              <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+            </a>
+            <div id="hold" class="row">
+                <div class="options" id="searchbutton" onclick="opensearbardiv()">
+                  <img class="holders" src="{% static 'main/images/search.svg'%}" alt="">
+                </div>
+              <a href="{%url 'main:account'%}" class="maga">
+                <div class="options">
+                  <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
+                </div>
+              </a>
+              <a href="{%url 'main:cart'%}" class="maga">
+                <div class="options">
+                  <div class="numberofitemsincart">
+                    <p>{{ numberofitemsincart}}</p>
+                  </div>
+                  <img class="holders" src="{% static 'main/images/shopping-bag.svg'%}" alt="">
+                </div>
+              </a>
+            </div>
+            </div>
+          <div id="mainimagecontainer" class="col-sm-12" >
+            <img class="deliverybot" src="{% static 'main/images/feedimage.png'%}" alt="">
+          </div>
+          <div class="containall col-sm-12">
+            <div class="dotdot">
+                <br>
+                <br>
+                <p id="categories">Categories</p>
+            </div>
+            <div id="container" class="col-sm-12">
+              <div id="containertwo" class="col-sm-12">
+                <div class="d-none d-md-block" id="leftarrow" class="leftarrow">
+                  <img id="leftarrowimg" src="{% static 'main/images/pointleft.svg'%}" alt="">
+                </div>
+                <div class="d-none d-md-block" id="rightarrow"  class="rightarrow">
+                  <img id="rightarrowimg" src="{% static 'main/images/pointright.svg'%}" alt="">
+                </div>
+                <div id="jumboo" class="jumboo">
+                  <a href="/categories/restaurants">
+                    <div class="randomboxes" id="randomboxes9">
+                      <p class="categoryimagetext">Restaurants</p>
+                      <div class="choices" id="choices9">
+                        <img class="autobot" id="autobotsubid" src="{% static 'main/images/restaurant.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/groceries">
+                    <div class="randomboxes" id="randomboxes4">
+                      <p class="categoryimagetext">Groceries</p>
+                      <div class="choices" id="choices4">
+                        <img class="autobot" src="{% static 'main/images/groceries.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/mobilephonesandtablets">
+                    <div class="randomboxes" id="randomboxes1">
+                      <p class="categoryimagetext">Mobile phones</p>
+                      <div class="choices" id="choices1">
+                        <img class="autobot" src="{% static 'main/images/mobilephones.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/computers">
+                    <div class="randomboxes" id="randomboxes2">
+                      <p class="categoryimagetext">Computers</p>
+                      <div class="choices" id="choices2">
+                        <img class="autobot" src="{% static 'main/images/computers.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/electronics">
+                    <div class="randomboxes" id="randomboxes3">
+                      <p class="categoryimagetext">Electronics</p>
+                      <div class="choices" id="choices3">
+                        <img class="autobot" id="autobotsubid2" src="{% static 'main/images/electronics.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/fashion">
+                    <div class="randomboxes" id="randomboxes5">
+                      <p class="categoryimagetext">Fashion</p>
+                      <div class="choices" id="choices5">
+                        <img class="autobot" src="{% static 'main/images/fashion.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/healthandbeauty">
+                    <div class="randomboxes" id="randomboxes6">
+                      <p class="categoryimagetext">Health & Beauty</p>
+                      <div class="choices" id="choices6">
+                        <img class="autobot" src="{% static 'main/images/beauty.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/games">
+                    <div class="randomboxes" id="randomboxes7">
+                      <p class="categoryimagetext">Gaming</p>
+                      <div class="choices" id="choices7">
+                        <img class="autobot" src="{% static 'main/images/games.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                  <a href="/categories/homeanddecor">
+                    <div class="randomboxes" id="randomboxes8">
+                      <p class="categoryimagetext">Home & Decor</p>
+                      <div class="choices" id="choices8">
+                        <img class="autobot" id="autobotsubid2" src="{% static 'main/images/homeanddecor.png'%}" alt="">
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div id="containagain" class="col-sm-12">
+                  <p class="col-sm-12" id="locationone">Delivery to:</p>
+                  <p class="col-sm-12" id="locationtwo">{{location}}</p>
+            </div>
+            <div class="dont col-sm-12">
+              <div class="donttwo col-sm-12">
+
+                <p  id="one">Don't miss out</p>
+                <p  id="two">Get all your favorite items delivered straight to your door step</p>
+              </div>
+            </div>
+            <p id="anotherheader" class="col-sm-12">Stores near you</p>
+            <div id="fix" class="infinite-container row col-sm-12">
+              {% for query in queryset %}
+                <div class="infinite-item col-sm-12 col-lg-4" >
+                  <div class="query col-sm-12" >
+                    <a href="/feed/{{query.query.slug}}-{{query.query.pk}}">
+                      <div class="storeimage col-sm-12" style="background-image: url({{query.query.store_image.store_image.url}});"  ></div>
+                      <p class="bump" id="subheader">{{ query.query.store_name }}</p>
+                      <p class="bump" id="sub1">₦{{ query.deliveryprice }}&nbspdelivery</p>
+                      <p class="bump" id="sub2"> . {{ query.deliverytime }} </p>
+                      <p class="bump" id="sub2"> . {{ query.query.store_category }} </p>
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="loading" style="display: block;">
+              <div class="dot-pulse"></div>
+            </div>
+            {% if queryset.has_next %}
+              <a class="infinite-more-link" href="?page={{ queryset.next_page_number }}"></a>
+            {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+
+
+
+
+
+
+      <script>
+          var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            onBeforePageLoad: function () {
+              $('.loading').show();
+            },
+            onAfterPageLoad: function ($items) {
+              $('.loading').hide();
+            }
+          });
+  </script>
+  <script>
+      $('#rightarrow').click(function() {
+        event.preventDefault();
+      $('#jumboo').animate({
+      scrollLeft: "+=800px"
+      }, "slow");
+      });
+
+      $('#leftarrow').click(function() {
+        event.preventDefault();
+        $('#jumboo').animate({
+          scrollLeft: "-=800px"
+        }, "slow");
+      });
+  </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  </body>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+
+</html>

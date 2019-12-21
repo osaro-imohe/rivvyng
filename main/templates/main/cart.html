@@ -1,0 +1,89 @@
+{%load static%}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/cart.css' %}">
+    <title> </title>
+  </head>
+  <body>
+    <div id="containagain" class="col-sm-12 row">
+      <a id="rivvylink" href="{%url 'main:home'%}">
+        <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
+      </a>
+      <div id="header">
+        <div id="hold" class="row">
+          <a href="{%url 'main:account'%}" id="plug">
+            <div class="options">
+              <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
+            </div>
+          </a>
+        </div>
+      </div>
+      </div>
+      <div class="bigmain col-sm-12">
+        {% if cartitems %}
+        <div class="itemcontainersheading col-sm-12 col-lg-8">
+          <div class="row" id="megatron">
+            <p class="megaheaders col-sm-8">ITEM</p>
+            <p class="megaheaders col-sm-2">QUANTITY</p>
+            <p class="megaheaders col-sm-2">PRICE</p>
+          </div>
+        </div>
+          {% for item in cartitems%}
+            <div class="itemcontainers col-sm-12 col-lg-8">
+              <div class="row" id="megatron">
+                <div class="itemname col-sm-10 col-lg-8">
+                    <a class="deleteitem" href="/remove/{{item.product.id}}">
+                      <p class="deleteiteminner">x</p>
+                    </a>
+                    <p class=" col-sm-12">{{item.product.name}}&nbsp</p>
+                </div>
+                <div class="itemquantity col-sm-1 col-lg-2">
+                  <p class=" col-sm-12">&nbsp{{item.quantity}}</p>
+                </div>
+                <div class="itemprice col-sm-1 col-lg-2">
+                  <p class=" col-sm-12">₦{% widthratio item.quantity 1 item.product.price %}</p>
+                </div>
+              </div>
+            </div>
+          {%endfor%}
+          <div class="totalprice col-sm-8">
+            <p>₦{{ totalprice }}</p>
+          </div>
+          <div class="anotherrow row col-sm-12 col-lg-8 ">
+            <div class="col-sm-6 brain">
+              <a href="{% url 'main:feed' %}">
+                <button class="continueshoppingbutton col-sm-12">
+                  <p id="continueshopping">CONTINUE SHOPPING</p>
+                </button>
+              </a>
+            </div>
+            <div class="col-sm-6 brain">
+            <a href="{% url 'main:checkout'%}">
+              <button class="checkoutbutton col-sm-12">
+                  <p id="checkout">CHECKOUT</p>
+              </button>
+            </a>
+            </div>
+          </div>
+
+        {%else%}
+          <div class="itemcontainerstwo col-sm-12 col-lg-8">
+            <p class="megaheaderstwo">YOU DON'T HAVE ANY ITEMS IN YOUR CART</p>
+          </div>
+        {%endif%}
+
+      </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>
