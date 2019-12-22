@@ -115,7 +115,7 @@ def feed(request):
             price = distance * unitprice
             deliveryprice = round(price)
         elif distance > 1:
-            unitprice = 200
+            unitprice = 120
             deliverytime = "35 - 40 minutes"
             price = distance * unitprice
             deliveryprice = math.ceil(price/100)*100
