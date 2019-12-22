@@ -101,41 +101,42 @@
                   document.getElementById('map'), {zoom: 15, center: uluru,});
                   var marker = new google.maps.Marker({position: uluru, map: map});}
 
-              function payWithPaystack(){
-                var handler = PaystackPop.setup({
-                  key: 'pk_live_ba38c47ac58891729dc71f42d93cd5208d83fafc',
-                  email: '{{email}}',
-                  amount: {{totalprice}} + "00",
-                  currency: "NGN",
-                  ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                  metadata: {
-                     custom_fields: [
-                        {
-                            display_name: "Name",
-                            variable_name: "Name",
-                            value: "{{ first_name }} {{last_name}}"
-                        },
-                        {
-                            display_name: "Email",
-                            variable_name: "Email",
-                            value: "{{ email }}"
-                        },
-                        // {
-                        //     display_name: "Items",
-                        //     variable_name: "Items",
-                        //     value: "{{ product_list }}"
-                        // }
-                     ]
-                  },
-                  callback: function(response){
-                      alert('success. transaction ref is ' + response.reference);
-                  },
-                  onClose: function(){
-                    return
+                  
+                  function payWithPaystack(){
+                    var handler = PaystackPop.setup({
+                      key: 'pk_live_ba38c47ac58891729dc71f42d93cd5208d83fafc',
+                      email: '{{email}}',
+                      amount: {{totalprice}} + "00",
+                      currency: "NGN",
+                      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                      metadata: {
+                         custom_fields: [
+                            {
+                                display_name: "Name",
+                                variable_name: "Name",
+                                value: "{{ first_name }} {{last_name}}"
+                            },
+                            {
+                                display_name: "Email",
+                                variable_name: "Email",
+                                value: "{{ email }}"
+                            },
+                            // {
+                            //     display_name: "Items",
+                            //     variable_name: "Items",
+                            //     value: "{{ product_list }}"
+                            // }
+                         ]
+                      },
+                      callback: function(response){
+                          alert('success. transaction ref is ' + response.reference);
+                      },
+                      onClose: function(){
+                          alert('window closed');
+                      }
+                    });
+                    handler.openIframe();
                   }
-                });
-                handler.openIframe();
-              }
       </script>
       <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdzDBOcdNaYjQeSZeSSvxnRsKKCgMyKQ&callback=initMap"></script>
