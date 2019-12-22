@@ -101,7 +101,7 @@
                   document.getElementById('map'), {zoom: 15, center: uluru,});
                   var marker = new google.maps.Marker({position: uluru, map: map});}
 
-                  
+
                   function payWithPaystack(){
                     var handler = PaystackPop.setup({
                       key: 'pk_live_ba38c47ac58891729dc71f42d93cd5208d83fafc',
@@ -132,7 +132,7 @@
                           alert('success. transaction ref is ' + response.reference);
                       },
                       onClose: function(){
-                          alert('window closed');
+                          return
                       }
                     });
                     handler.openIframe();
