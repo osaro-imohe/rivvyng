@@ -16,6 +16,9 @@ body{
   padding-right: 5%;
   text-align: left;
 }
+.loading{
+  height: 40px !important;
+}
 #containertwo{
   height: 100%;
   background-color: white;
