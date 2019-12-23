@@ -92,6 +92,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET', '')
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com'
+AWS_DEFAULT_ACL = None
 #static media settings
 STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/'
 MEDIA_URL = STATIC_URL + 'media/'
