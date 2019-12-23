@@ -25,6 +25,11 @@ body{
 #rivvylink{
   margin-left: 6%;
 }
+.totalpriceinner{
+  text-align: right;
+  padding-right: 15px;
+  padding-top: 10px;
+}
 .options{
   height: 100%;
   width: 50px;
