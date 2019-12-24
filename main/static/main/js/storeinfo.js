@@ -14,11 +14,8 @@ function autobot(clicked_id){
   var popupproductdescription = document.getElementById('popupproductdescription');
   var overlay = document.getElementById("overlay");
   var itemprice = document.getElementById("itemprice");
-  var popupinner = document.getElementById('popupinner');
-  overlay.style.height= "100%" ;
-  overlay.style.bottom = "0%";
-  popup.style.padding = "30px";
-  popupinner.style.display = "block";
+  popup.style.display = "block";
+  overlay.style.display = "block";
   popupproductname.innerHTML = document.getElementById(titleid).innerHTML;
   popupproductdescription.innerHTML = document.getElementById(descriptionid).innerHTML;
   pricename = document.getElementById(priceid).innerHTML.substr(1);
@@ -69,10 +66,8 @@ function closepopup(){
   var popupproductdescription = document.getElementById('popupproductdescription');
   var itemprice = document.getElementById('itemprice');
   var quantity = document.getElementById('jiggy');
-  popupinner.style.display = "none";
-  overlay.style.height= "0px";
-  overlay.style.bottom = "0";
-  popup.style.padding = "0px";
+  popup.style.display = "none";
+  overlay.style.display = "none";
   popupproductname.innerHTML = "";
   popupproductdescription.innerHTML = "";
   itemprice.innerHTML = "";
