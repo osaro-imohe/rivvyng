@@ -49,34 +49,39 @@
             </form>
           </div>
       </div>
-      <div class="col-sm-12 col-lg-4"id="popup">
-        <div id="closebutton" onclick="closepopup()">
-          <div id="closebuttonleftbar"></div>
-          <div id="closebuttonrightbar"></div>
-        </div>
-        <h1 id="popupproductname"></h1>
-        <h1 id="popupproductdescription"></h1>
-        <div class="row col-sm-12" id="bump">
-          <div id="quantity" class="col-sm-5 ">
-            <div id="quantitybutton" class="col-sm-12">
-              <div class="row col-sm-12" id="rowyourboat">
-                <button id="hmm" type="button" class="cont"  name="button" onclick="buyless()">-</button>
-                <div  class="cont">
-                    <p id="jiggy">1</p>
+      <div id="overlay" >
+        <div id ="suboverlay" onclick="closepopup()"></div>
+        <div class="col-sm-12 col-lg-4"id="popup">
+          <div class="col-sm-12" id="popupinner">
+            <div id="closebutton" onclick="closepopup()">
+              <div id="closebuttonleftbar"></div>
+              <div id="closebuttonrightbar"></div>
+            </div>
+            <h1 id="popupproductname"></h1>
+            <h1 id="popupproductdescription"></h1>
+            <div class="row col-sm-12" id="bump">
+              <div id="quantity" class="col-sm-5 ">
+                <div id="quantitybutton" class="col-sm-12">
+                  <div class="row col-sm-12" id="rowyourboat">
+                    <button id="hmm" type="button" class="cont"  name="button" onclick="buyless()">-</button>
+                    <div  class="cont">
+                        <p id="jiggy">1</p>
+                    </div>
+                    <button  id="pft" class="cont" type="button" name="button"  onclick="buymore()" >+</button>
+                  </div>
                 </div>
-                <button  id="pft" class="cont" type="button" name="button"  onclick="buymore()" >+</button>
+              </div>
+              <div id="checkout" class="col-sm-7">
+                <button id="checkoutbutton" class="col-sm-12" type="button" name="button" onclick="submitform()">
+                  <p class="it" id="kurt">ADD TO CART</p>
+                  <div class="row" id="finally">
+                    <p class="it">₦</p>
+                    <p class="it" id="itemprice"></p>
+                  </div>
+
+                </button>
               </div>
             </div>
-          </div>
-          <div id="checkout" class="col-sm-7">
-            <button id="checkoutbutton" class="col-sm-12" type="button" name="button" onclick="submitform()">
-              <p class="it" id="kurt">ADD TO CART</p>
-              <div class="row" id="finally">
-                <p class="it">₦</p>
-                <p class="it" id="itemprice"></p>
-              </div>
-
-            </button>
           </div>
         </div>
       </div>
@@ -110,7 +115,6 @@
         {% endfor %}
         </div>
       </div>
-      <div id="overlay" onclick="closepopup()"></div>
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script>
@@ -130,8 +134,10 @@
                 var numberofitemsincart = $('#itemsincart').text();
                 var updateditemnumber = parseInt(numberofitemsincart) + 1;
                 $('#itemsincart').text(updateditemnumber);
-                $('#popup').css("display","none");
-                $('#overlay').css("display","none");
+                $('#popupinner').css("display","none");
+                $('#overlay').css("bottom","0px");
+                $('#overlay').css("height","0px");
+                $('#popup').css("padding","0px");
                 $('#jiggy').text('1');
               }
             });
