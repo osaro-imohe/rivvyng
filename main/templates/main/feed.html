@@ -16,7 +16,7 @@
     <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
     <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
     <script src="{% static 'main/js/infinite.min.js' %}"></script>
-  <title>Rivvy</title>
+  <title>Hello, world!</title>
   </head>
   <body>
       {% if not queryset%}
@@ -48,7 +48,7 @@
                   <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
                 </div>
               </a>
-              <a href="{%url 'main:cart'%}" class="maga">
+              <a  class="maga2">
                 <div class="options">
                   <div class="numberofitemsincart">
                     <p>{{ numberofitemsincart}}</p>
@@ -57,6 +57,14 @@
                 </div>
               </a>
             </div>
+            </div>
+            <div id="cartdiv" class="cartdivclose">
+              <div id="cartdivclosebutton" onclick="closepopup()">
+                <div id="cartdivclosebuttonleftbar"></div>
+                <div id="cartdivclosebuttonrightbar"></div>
+              </div>
+              <div id="cartdivinner">
+              </div>
             </div>
           <div id="mainimagecontainer" class="col-sm-12" >
             <img class="deliverybot" src="{% static 'main/images/feedimage.png'%}" alt="">
@@ -204,8 +212,7 @@
               $('.loading').hide();
             }
           });
-  </script>
-  <script>
+
       $('#rightarrow').click(function() {
         event.preventDefault();
       $('#jumboo').animate({
@@ -219,6 +226,68 @@
           scrollLeft: "-=800px"
         }, "slow");
       });
+
+      function removeitem(id){
+        var pk = id
+        var base_url = window.location.origin;
+        var url_ext = "/remove/" + pk + ""
+        var url = base_url + url_ext
+        $.ajax({
+          type:"GET",
+          url:url,
+          dataType: "json",
+          success:function(data){
+             var itemsincart = $('#itemsincart').text()
+             var updateditemsincart = itemsincart - 1
+             var itemsdivid = "#item"+id
+             $(itemsdivid).remove()
+             if (itemsincart => 0){
+               $('#itemsincart').text(updateditemsincart)
+             }
+             else{
+               return;
+             }
+           }
+      })
+    }
+
+       $('.maga2').click(
+         function(e){
+           e.preventDefault();
+           $('#cartdiv').addClass('cartdivopen').removeClass('cartdivclose');
+           $('#cartdivclosebutton').css("display","block");
+           $.ajax({
+             type:"GET",
+             url:"{% url 'main:cart' %}",
+             dataType: "json",
+             success:function(data){
+               if ( typeof data !== 'undefined' && data.length > 0 ){
+                   var checkoutinnermaintext = "<p id='checkoutinnermaintext'>Your Order</p><p id='checkoutinnermaintexttwo'></p>"
+                     $('#cartdivinner').append(checkoutinnermaintext);
+                   var checkoutbutton = "<a href=" + " {%url 'main:checkout'%}" + " ><button id='checkoutpagebutton'><p id='checkoutbuttonleft'>Checkout</p><p id='checkoutbuttonright'>₦</p></button></a>"
+                   $('#cartdivinner').append(checkoutbutton);
+                   $.each(data, function(i, item) {
+
+                     var divs ="<div class='storeitemdivs row col-sm-12' id='item"+data[i].product_id+"'><div class='itemquantity col-sm-4'><p class='itemquantitytext'>" + data[i].product_quantity + "</p></div><div class='itemname col-sm-4'><p class='itemnametext'>" + data[i].product_name + "</p></div><div class='itemprice col-sm-4'><p class='itempricetext'>" + "₦ " + data[i].product_price + "</p></div><a><p onClick='removeitem(this.id)' id='" + data[i].product_id + "'class='removecartitem'>REMOVE</p><a></div>";
+                     $('#cartdivinner').append(divs);
+                     $('#checkoutinnermaintexttwo').text(data[i].store_name)
+                     $('#checkoutbuttonright').text('₦' + data[i].total_price)
+                   });
+               }
+               else{
+                 var empty_cart_message ="<div id='error_message_div'><h1 id='error_message_text'>You don't have any items in your cart</h1></div>"
+                 $('#cartdivinner').append(empty_cart_message);
+               }
+             }
+           });
+         });
+
+
+       $('#cartdivclosebutton').click(function() {
+         $('#cartdiv').addClass('cartdivclose').removeClass('cartdivopen');
+         $('#cartdivclosebutton').css("display","none");
+         $('#cartdivinner').empty()
+       });
   </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

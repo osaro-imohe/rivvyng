@@ -19,6 +19,7 @@ from django.contrib.gis.measure import Distance
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 import math
+from django.http import JsonResponse
 
 
 
@@ -115,7 +116,7 @@ def feed(request):
             price = distance * unitprice
             deliveryprice = round(price)
         elif distance > 1:
-            unitprice = 120
+            unitprice = 200
             deliverytime = "35 - 40 minutes"
             price = distance * unitprice
             deliveryprice = math.ceil(price/100)*100
@@ -136,101 +137,6 @@ def feed(request):
         queryset = Store_detail.objects.none()
     # return HttpResponse(template.render(context,request))
     return render(request, 'main/feed.html', {'queryset': queryset, 'location':location,'numberofitemsincart':numberofitemsincart,})
-def cart(request):
-    template = loader.get_template("main/cart.html")
-    if request.user.is_authenticated:
-        email = request.user.email
-        usercartitems = request.user.cart_item_set.all()
-        cartitems = []
-        store = ""
-        totalprice = 0
-        numberofitemsincart = len(cartitems)
-        for item in usercartitems:
-            quantity = item.product_quantity
-            store_id = item.store_id
-            product_id = item.product_id
-            storedetail = Store_detail.objects.get(pk = store_id)
-            product = Product.objects.get(pk = product_id)
-            item = {"quantity":quantity, "product":product}
-            cartitems.extend([item])
-            store = storedetail
-            numberofitemsincart = len(cartitems)
-            product = Product.objects.get(pk = product_id)
-            totalproductprice = product.price * int(quantity)
-            totalprice += totalproductprice
-        context={
-        'store':store,
-        'email':email,
-        'cartitems':cartitems,
-        'numberofitemsincart':numberofitemsincart,
-        'totalprice':totalprice,
-        }
-        return HttpResponse(template.render(context,request))
-    elif request.user.is_authenticated is False:
-        if request.session.get('cart'):
-            allitems = request.session['cart']
-            cartitems = []
-            totalprice = 0
-            for item in allitems.values():
-                store_id = item['store_id']
-                quantity = item['quantity']
-                product_id = item['product_id']
-                product = Product.objects.get(pk = product_id)
-                store = Store_detail.objects.get(pk = store_id)
-                totalproductprice = product.price * int(quantity)
-                totalprice += totalproductprice
-                cartdict = {'store':store,'product':product,'quantity':quantity,}
-                cartitems.append(cartdict)
-            context = {
-                'cartitems':cartitems,
-                'totalprice':totalprice,
-            }
-        else:
-            context = {}
-        return HttpResponse(template.render(context,request))
-    else:
-        return HttpResponse(template.render(context,request))
-def checkout(request):
-    template = loader.get_template("main/checkout.html")
-    if request.user.is_authenticated:
-        email = request.user.email
-        first_name = request.user.first_name
-        last_name = request.user.last_name
-        cartitems = []
-        store = ""
-        totalprice = 0
-        if request.user.cart_item_set.all():
-            usercartitems = request.user.cart_item_set.all()
-            for item in usercartitems:
-                quantity = item.product_quantity
-                store_id = item.store_id
-                product_id = item.product_id
-                storedetail = Store_detail.objects.get(pk = store_id)
-                product = Product.objects.get(pk = product_id)
-                item = {"quantity":quantity, "product":product}
-                cartitems.extend([item])
-                store = storedetail
-                numberofitemsincart = len(cartitems)
-                product = Product.objects.get(pk = product_id)
-                totalproductprice = product.price * int(quantity)
-                totalprice += totalproductprice
-                context={
-                'store':store,
-                'first_name':first_name,
-                'last_name':last_name,
-                'email':email,
-                'cartitems':cartitems,
-                'numberofitemsincart':numberofitemsincart,
-                'totalprice':totalprice,
-                }
-        else:
-            context={}
-        return HttpResponse(template.render(context,request))
-    elif request.user.is_authenticated is False:
-        return redirect("main:login")
-    else:
-        return redirect("main:login")
-
 def account(request):
     if request.user.is_authenticated:
         email = request.user.email
@@ -580,12 +486,21 @@ def addtocart(request):
     if request.method =="POST" and request.user.is_authenticated:
         store_id = request.POST.get("store_id")
         product_id = request.POST.get("product_id")
+        print(product_id)
         quantity = request.POST.get("quantity")
-        cart_item = request.user.cart_item_set.create(
-            store_id = store_id,
-            product_id = product_id,
-            product_quantity = quantity,
-        )
+        if request.user.cart_item_set.filter(product_id = product_id):
+            cart_item_set = request.user.cart_item_set.filter(product_id = product_id)
+            for item in cart_item_set:
+                updated_item_number = int(item.product_quantity) + int(quantity)
+                print(updated_item_number)
+                item.product_quantity = updated_item_number
+                item.save()
+        else:
+            cart_item = request.user.cart_item_set.create(
+                store_id = store_id,
+                product_id = product_id,
+                product_quantity = quantity,
+            )
         return HttpResponse("")
     elif request.method == "POST" and not request.user.is_authenticated:
         store_id = request.POST.get("store_id")
@@ -612,6 +527,116 @@ def addtocart(request):
             return HttpResponse("")
     else:
         return HttpResponse("")
+
+def cart(request):
+    template = loader.get_template("main/cart.html")
+    if request.user.is_authenticated:
+        email = request.user.email
+        usercartitems = request.user.cart_item_set.all()
+        cartitems = []
+        store = ""
+        totalprice = 0
+        your_json_data = []
+        numberofitemsincart = len(cartitems)
+        for item in usercartitems:
+            quantity = item.product_quantity
+            store_id = item.store_id
+            product_id = item.product_id
+            storedetail = Store_detail.objects.get(pk = store_id)
+            product = Product.objects.get(pk = product_id)
+            # item = {"quantity":quantity, "product":product}
+            # cartitems.extend([item])
+            store = storedetail
+            numberofitemsincart = len(cartitems)
+            product = Product.objects.get(pk = product_id)
+            totalproductprice = product.price * int(quantity)
+            totalprice += totalproductprice
+
+            product_price = int(product.price) * int(quantity)
+            product_price = str(product_price)
+            store_name = str(store.store_name)
+            print(product.price)
+            print(item.product_quantity)
+            store_id = str(store_id)
+            product_id = str(product_id)
+            product_name = str(product.name)
+            product_quantity = str(quantity)
+            total_price = str(totalprice)
+
+            cart_details = {'store_id':store_id,'product_id':product_id,'product_name':product_name,'product_quantity':product_quantity,'product_price':product_price,'total_price':total_price,'store_name':store_name,'total_price':total_price,}
+            your_json_data.extend([cart_details])
+        return JsonResponse(your_json_data, safe=False)
+    elif request.user.is_authenticated is False:
+        your_json_data = []
+        if request.session.get('cart'):
+            allitems = request.session['cart']
+            your_json_data = []
+            cartitems = []
+            totalprice = 0
+            for item in allitems.values():
+                print(item)
+                store_id = item['store_id']
+                quantity = item['quantity']
+                product_id = item['product_id']
+                product = Product.objects.get(pk = product_id)
+                store = Store_detail.objects.get(pk = store_id)
+                totalproductprice = product.price * int(quantity)
+                totalprice += totalproductprice
+                cartdict = {'store':store,'product':product,'quantity':quantity,}
+                cartitems.append(cartdict)
+                product_price = int(product.price) * int(quantity)
+                store_id = str(store_id)
+                product_id = str(product_id)
+                product_name = str(product.name)
+                product_quantity = str(quantity)
+                total_price = str(totalprice)
+                store_name = str(store.store_name)
+                cart_details = {'store_id':store_id,'product_id':product_id,'product_name':product_name,'product_quantity':product_quantity,'product_price':product_price,'total_price':total_price,'store_name':store_name,'total_price':total_price,}
+                your_json_data.extend([cart_details])
+        return JsonResponse(your_json_data, safe=False)
+    else:
+        return JsonResponse(your_json_data, safe=False)
+def checkout(request):
+    template = loader.get_template("main/checkout.html")
+    if request.user.is_authenticated:
+        email = request.user.email
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+        cartitems = []
+        store = ""
+        totalprice = 0
+        if request.user.cart_item_set.all():
+            usercartitems = request.user.cart_item_set.all()
+            for item in usercartitems:
+                quantity = item.product_quantity
+                store_id = item.store_id
+                product_id = item.product_id
+                storedetail = Store_detail.objects.get(pk = store_id)
+                product = Product.objects.get(pk = product_id)
+                item = {"quantity":quantity, "product":product}
+                cartitems.extend([item])
+                store = storedetail
+                numberofitemsincart = len(cartitems)
+                product = Product.objects.get(pk = product_id)
+                totalproductprice = product.price * int(quantity)
+                totalprice += totalproductprice
+                context={
+                'store':store,
+                'first_name':first_name,
+                'last_name':last_name,
+                'email':email,
+                'cartitems':cartitems,
+                'numberofitemsincart':numberofitemsincart,
+                'totalprice':totalprice,
+                }
+        else:
+            context={}
+        return HttpResponse(template.render(context,request))
+    elif request.user.is_authenticated is False:
+        return redirect("main:login")
+    else:
+        return redirect("main:login")
+
 def removecart(request,pk):
     if request.user.is_authenticated:
         if request.user.cart_item_set.filter(product_id = pk):
@@ -661,12 +686,14 @@ def removecheckout(request,pk):
         if request.user.cart_item_set.filter(product_id = pk):
             cart_object = request.user.cart_item_set.filter(product_id = pk)
             cart_object.delete()
+            print('deleted')
         return redirect("main:checkout")
     if not request.user.is_authenticated:
         cart = request.session['cart']
         product_id = str(pk)
         del cart[product_id]
         request.session.modified = True
+        print('deleted')
         return redirect("main:checkout")
 def logout(request):
     auth_logout(request)

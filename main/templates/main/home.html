@@ -10,7 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/home.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
     <title>Here</title>
   </head>
   <body>
@@ -25,7 +27,7 @@
             <img class="holders" src="{% static 'main/images/account.svg'%}" alt="">
           </div>
         </a>
-        <a href="{%url 'main:cart'%}" class="maga">
+        <a  class="maga2">
           <div class="options">
             <div class="numberofitemsincart">
               <p>{{ numberofitemsincart}}</p>
@@ -63,7 +65,7 @@
                 <input  class="invisible" id="lng" type="text" name="lng" value="" placeholder="">
                 <input  class="invisible" id="lat" type="text" name="lat" value="" placeholder="">
                 <div class="col-sm-12 col-lg-12 row" id="narc">
-                  <input class="col-sm-12 col-lg-10" id="search" type="text" name="location" value="" placeholder="Enter your street address">
+                  <input class="col-sm-12 col-lg-10" id="search" type="text" name="location" value="" placeholder="Enter your address">
                   <button class="col-sm-12 col-lg-2" type="submit" id="submit" name="button">GO</button>
                 </div>
 
@@ -72,7 +74,14 @@
           </div>
       </div>
     </div>
-
+    <div id="cartdiv" class="cartdivclose">
+      <div id="cartdivclosebutton" onclick="closepopup()">
+        <div id="cartdivclosebuttonleftbar"></div>
+        <div id="cartdivclosebuttonrightbar"></div>
+      </div>
+      <div id="cartdivinner">
+      </div>
+    </div>
       <div class="howitworkscontainer col-sm-12">
         <div class="container" id="container">
           <div class="searchcontainer row col-sm-12">
@@ -161,8 +170,70 @@
                     document.getElementById("lng").setAttribute('value',place.geometry.location.lng());
                 });
       }
+      function removeitem(id){
+        var pk = id
+        var base_url = window.location.origin;
+        var url_ext = "/remove/" + pk + ""
+        var url = base_url + url_ext
+        $.ajax({
+          type:"GET",
+          url:url,
+          dataType: "json",
+          success:function(data){
+             var itemsincart = $('#itemsincart').text()
+             var updateditemsincart = itemsincart - 1
+             var itemsdivid = "#item"+id
+             $(itemsdivid).remove()
+             if (itemsincart => 0){
+               $('#itemsincart').text(updateditemsincart)
+             }
+             else{
+               return;
+             }
+           }
+      })
+    }
+
+       $('.maga2').click(
+         function(e){
+           e.preventDefault();
+           $('#cartdiv').addClass('cartdivopen').removeClass('cartdivclose');
+           $('#cartdivclosebutton').css("display","block");
+           $.ajax({
+             type:"GET",
+             url:"{% url 'main:cart' %}",
+             dataType: "json",
+             success:function(data){
+               if ( typeof data !== 'undefined' && data.length > 0 ){
+                   var checkoutinnermaintext = "<p id='checkoutinnermaintext'>Your Order</p><p id='checkoutinnermaintexttwo'></p>"
+                     $('#cartdivinner').append(checkoutinnermaintext);
+                   var checkoutbutton = "<a href=" + " {%url 'main:checkout'%}" + " ><button id='checkoutpagebutton'><p id='checkoutbuttonleft'>Checkout</p><p id='checkoutbuttonright'>₦</p></button></a>"
+                   $('#cartdivinner').append(checkoutbutton);
+                   $.each(data, function(i, item) {
+
+                     var divs ="<div class='storeitemdivs row col-sm-12' id='item"+data[i].product_id+"'><div class='itemquantity col-sm-4'><p class='itemquantitytext'>" + data[i].product_quantity + "</p></div><div class='itemname col-sm-4'><p class='itemnametext'>" + data[i].product_name + "</p></div><div class='itemprice col-sm-4'><p class='itempricetext'>" + "₦ " + data[i].product_price + "</p></div><a><p onClick='removeitem(this.id)' id='" + data[i].product_id + "'class='removecartitem'>REMOVE</p><a></div>";
+                     $('#cartdivinner').append(divs);
+                     $('#checkoutinnermaintexttwo').text(data[i].store_name)
+                     $('#checkoutbuttonright').text('₦' + data[i].total_price)
+                   });
+               }
+               else{
+                 var empty_cart_message ="<div id='error_message_div'><h1 id='error_message_text'>You don't have any items in your cart</h1></div>"
+                 $('#cartdivinner').append(empty_cart_message);
+               }
+             }
+           });
+         });
+
+
+       $('#cartdivclosebutton').click(function() {
+         $('#cartdiv').addClass('cartdivclose').removeClass('cartdivopen');
+         $('#cartdivclosebutton').css("display","none");
+         $('#cartdivinner').empty()
+       });
+
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdzDBOcdNaYjQeSZeSSvxnRsKKCgMyKQ&libraries=places&callback=activatePlacesSearch"></script>
-    <script type="text/javascript" src="{%static 'main/home.js'%}"></script>
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
   </body>
 </html>

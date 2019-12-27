@@ -277,8 +277,13 @@ h3{
           margin-top: 130px !important;
           }
       }
+      @media (max-width:767px) {
 
-
+        .cartdivopen
+        {
+          width: 100% !important;
+        }
+      }
 #popup{
   height :70%;
   background-color: white;
@@ -420,8 +425,8 @@ h3{
 }
 #closebuttonleftbar{
   height: 100%;
-  width: 3px;
-  background-color: black;
+  width: 2px;
+  background-color: rgb(73, 73, 73);
   position: absolute;
   left: 0;
   right: 0;
@@ -430,8 +435,8 @@ h3{
 }
 #closebuttonrightbar{
   height: 100%;
-  width: 3px;
-  background-color: black;
+  width: 2px;
+  background-color: rgb(73, 73, 73);
   position: absolute;
   left: 0;
   right: 0;
@@ -449,4 +454,166 @@ h3{
 #gas{
   display: none;
   height: 0px !important;
+}
+
+#cartdiv{
+  height: 100%;
+  background-color: white;
+  position: absolute;
+  right: 0;
+  z-index: 100;
+  bottom: 0;
+  padding: 0px;
+  transition: all 0.5s ease;
+  position: fixed;
+}
+#cartdivinner{
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+}
+#cartdivclosebutton{
+  width: 20px;
+  height: 20px;
+  top: 0;
+  right: 0;
+  float: right;
+  position: relative;
+  margin-top: 10px;
+  margin-right: 10px;
+  display: none;
+  z-index: 100;
+}
+#cartdivclosebuttonleftbar{
+  height: 100%;
+  width: 2px;
+  background-color: rgb(73, 73, 73);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: rotate(45deg);
+}
+#cartdivclosebuttonrightbar{
+  height: 100%;
+  width: 2px;
+  background-color: rgb(73, 73, 73);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: rotate(135deg);
+}
+ .cartdivopen{
+   width: 30% ;
+ }
+ .cartdivclose{
+   width: 0% ;
+ }
+.storeitemdivs{
+  display: block;
+  padding: 30px;
+  margin: 0px;
+  border-bottom: 1px solid lightgray;
+}
+.itemquantity{
+  width: 10%;
+  display: inline-block;
+  left: 0;
+  float: left;
+  padding: 0px;
+}
+.itemquantitytext{
+  font-weight: 800;
+  color: lightgray;
+}
+.itemname{
+  width: 60%;
+  text-align: left;
+  display: inline-block;
+  color: #9A9CA0;
+  font-weight: 800;
+}
+.itemprice{
+  width: 30%;
+  display: inline-block;
+  color: #767676;
+  font-size: 15px;
+  padding: 0px;
+}
+#checkoutpagebutton{
+  width: 80%;
+  padding: 15px;
+  background-color: #51D3F9;
+  border: none;
+  color: white;
+  font-weight: 800;
+  border-radius: 8px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  font-family: "Helvetica Neue", Helvetica;
+}
+.removecartitem{
+  text-align: left;
+  font-size: 13px;
+  margin-left: 20px;
+  color: #DA1B08;
+  font-weight: 600;
+  margin-top: 2.5%;
+}
+#checkoutinnermaintext{
+  text-align: left;
+  margin-left: 10%;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica;
+}
+#checkoutinnermaintexttwo{
+  text-align: left;
+  margin-left: 10%;
+  color: rgb(143, 149, 163);
+  font-size: 25px;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica;
+}
+
+#checkoutbuttonleft{
+  text-align: left;
+  float: left;
+  margin: 0px;
+}
+#checkoutbuttonright{
+  text-align: right;
+  float: right;
+  margin: 0px;
+  font-family: "Helvetica Neue", Helvetica;
+}
+#error_message_div{
+  height: 100px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 40px;
+  margin-bottom: 10px !important;
+  margin: 20px;
+  margin-top: 20%;
+  border: 1px solid rgba(217,219,224,0.5);
+}
+#error_message_text{
+  font-family: "Helvetica Neue", Helvetica;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  color: rgb(143, 149, 163);
+  -webkit-box-align: center;
+  align-items: center;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: left;
+  padding: 0px;
+  text-align: center;
 }

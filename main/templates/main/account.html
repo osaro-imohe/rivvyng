@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/account.css' %}">
     <script type="text/javascript" src="{%static 'main/js/account.js'%}"></script>
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
     <title>Hello, world!</title>
   </head>
   <body>
@@ -33,12 +34,20 @@
             <img class="holders" src="{% static 'main/images/search.svg'%}" alt="">
           </div>
         </a>
-        <a href="{% url 'main:cart'%}">
+        <a  class="maga">
           <div class="options">
             <img class="holders" src="{% static 'main/images/shopping-bag.svg'%}" alt="">
           </div>
         </a>
       </div>
+      </div>
+      <div id="cartdiv" class="cartdivclose">
+        <div id="cartdivclosebutton" onclick="closepopup()">
+          <div id="cartdivclosebuttonleftbar"></div>
+          <div id="cartdivclosebuttonrightbar"></div>
+        </div>
+        <div id="cartdivinner">
+        </div>
       </div>
       <div class="justfordesign col-sm-12">
         <div class="profileball">
@@ -71,9 +80,72 @@
       </div>
 
 
+    <script>
+        function removeitem(id){
+          var pk = id
+          var base_url = window.location.origin;
+          var url_ext = "/remove/" + pk + ""
+          var url = base_url + url_ext
+          $.ajax({
+            type:"GET",
+            url:url,
+            dataType: "json",
+            success:function(data){
+               var itemsincart = $('#itemsincart').text()
+               var updateditemsincart = itemsincart - 1
+               var itemsdivid = "#item"+id
+               $(itemsdivid).remove()
+               if (itemsincart => 0){
+                 $('#itemsincart').text(updateditemsincart)
+               }
+               else{
+                 return;
+               }
+             }
+        })
+      }
+
+     $('.maga').click(
+       function(e){
+         e.preventDefault();
+         $('#cartdiv').addClass('cartdivopen').removeClass('cartdivclose');
+         $('#cartdivclosebutton').css("display","block");
+         $.ajax({
+           type:"GET",
+           url:"{% url 'main:cart' %}",
+           dataType: "json",
+           success:function(data){
+             if ( typeof data !== 'undefined' && data.length > 0 ){
+                 var checkoutinnermaintext = "<p id='checkoutinnermaintext'>Your Order</p><p id='checkoutinnermaintexttwo'></p>"
+                   $('#cartdivinner').append(checkoutinnermaintext);
+                 var checkoutbutton = "<a href=" + " {%url 'main:checkout'%}" + " ><button id='checkoutpagebutton'><p id='checkoutbuttonleft'>Checkout</p><p id='checkoutbuttonright'>₦</p></button></a>"
+                 $('#cartdivinner').append(checkoutbutton);
+                 $.each(data, function(i, item) {
+
+                   var divs ="<div class='storeitemdivs row col-sm-12' id='item"+data[i].product_id+"'><div class='itemquantity col-sm-4'><p class='itemquantitytext'>" + data[i].product_quantity + "</p></div><div class='itemname col-sm-4'><p class='itemnametext'>" + data[i].product_name + "</p></div><div class='itemprice col-sm-4'><p class='itempricetext'>" + "₦ " + data[i].product_price + "</p></div><a><p onClick='removeitem(this.id)' id='" + data[i].product_id + "'class='removecartitem'>REMOVE</p><a></div>";
+                   $('#cartdivinner').append(divs);
+                   $('#checkoutinnermaintexttwo').text(data[i].store_name)
+                   $('#checkoutbuttonright').text('₦' + data[i].total_price)
+                 });
+             }
+             else{
+               var empty_cart_message ="<div id='error_message_div'><h1 id='error_message_text'>You don't have any items in your cart</h1></div>"
+               $('#cartdivinner').append(empty_cart_message);
+             }
+           }
+         });
+       });
+
+
+     $('#cartdivclosebutton').click(function() {
+       $('#cartdiv').addClass('cartdivclose').removeClass('cartdivopen');
+       $('#cartdivclosebutton').css("display","none");
+       $('#cartdivinner').empty()
+     });
+    </script>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
