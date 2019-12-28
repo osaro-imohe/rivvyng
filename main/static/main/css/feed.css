@@ -481,6 +481,7 @@ a:hover{
   padding: 0px !important;
   margin: 0px !important;
   width: 100%;
+  overflow-x: hidden;
 }
 .logo{
   height: 30px;
