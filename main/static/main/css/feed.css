@@ -568,6 +568,7 @@ a:hover{
 .containall{
   /* height: 100% !important; */
   background-color: white;
+  padding-bottom: 50px;
 }
 #cartdiv{
   height: 100%;
