@@ -481,7 +481,10 @@ a:hover{
   padding: 0px !important;
   margin: 0px !important;
   width: 100%;
-  overflow-x: hidden;
+  position: absolute; /*this is required for clip-paths to work*/
+  -webkit-clip-path: inset(0); /* safari*/
+  clip-path: inset(0);
+  clip: rect(0px, auto, auto, 0px);
 }
 .logo{
   height: 30px;
