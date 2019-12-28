@@ -68,7 +68,7 @@ body{
   padding: 80px 24px !important;
 }
 #orderanything{
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   margin: 0 auto;
