@@ -58,6 +58,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   display: inline-block;
+  position: absolute;
 }
 #right{
   height: 500px;
