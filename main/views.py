@@ -700,10 +700,10 @@ def logout(request):
     auth_logout(request)
     return redirect("main:home")
 
-def error_404(request):
+def error_404(request,exception):
         data = {}
         return render(request,'main/error_404.html', data)
 
-def error_500(request):
+def error_500(request,exception):
         data = {}
         return render(request,'main/error_500.html', data)
