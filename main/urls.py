@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
-from . import views
+from . import views as views
 
 app_name = 'main'
 from . import views
@@ -30,3 +30,6 @@ path('categories/healthandbeauty',views.healthandbeauty,name='healthandbeauty',)
 path('categories/games',views.games,name='games',),
 path('categories/homeanddecor',views.homeanddecor,name ='homeanddecor',),
 ]
+
+handler404 = views.error_404
+handler500 = views.error_500
