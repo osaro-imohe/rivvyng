@@ -20,6 +20,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 import math
 from django.http import JsonResponse
+import handler404, handler500
 
 
 
