@@ -19,6 +19,7 @@ function autobot(clicked_id){
   overlay.style.bottom = "0%";
   popup.style.padding = "30px";
   popupinner.style.display = "block";
+  popup.style.position = "fixed";
   popupproductname.innerHTML = document.getElementById(titleid).innerHTML;
   popupproductdescription.innerHTML = document.getElementById(descriptionid).innerHTML;
   pricename = document.getElementById(priceid).innerHTML.substr(1);
