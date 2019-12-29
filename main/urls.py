@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
-from . import views 
+from . import views
 
 app_name = 'main'
-from . import views
 
 urlpatterns = [
 path('',views.home,name='home',),
