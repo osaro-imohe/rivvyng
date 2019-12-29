@@ -19,7 +19,6 @@ function autobot(clicked_id){
   overlay.style.bottom = "0%";
   popup.style.padding = "30px";
   popupinner.style.display = "block";
-  popup.style.position = "fixed";
   popupproductname.innerHTML = document.getElementById(titleid).innerHTML;
   popupproductdescription.innerHTML = document.getElementById(descriptionid).innerHTML;
   pricename = document.getElementById(priceid).innerHTML.substr(1);
@@ -74,7 +73,6 @@ function closepopup(){
   overlay.style.height= "0px";
   overlay.style.bottom = "0";
   popup.style.padding = "0px";
-  popup.style.position = "absolute";
   popupproductname.innerHTML = "";
   popupproductdescription.innerHTML = "";
   itemprice.innerHTML = "";
