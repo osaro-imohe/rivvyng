@@ -699,3 +699,11 @@ def removecheckout(request,pk):
 def logout(request):
     auth_logout(request)
     return redirect("main:home")
+
+def error_404(request):
+        data = {}
+        return render(request,'main/error_404.html', data)
+
+def error_500(request):
+        data = {}
+        return render(request,'main/error_500.html', data)
