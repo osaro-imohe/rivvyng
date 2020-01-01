@@ -18,17 +18,17 @@ body{
   flex-wrap: nowrap !important;
   border-bottom: 1px solid rgb(236, 237, 239);
 }
+.totalpriceinner{
+  text-align: right;
+  padding-right: 15px;
+  padding-top: 10px;
+}
 .logo{
   height: 30px;
   margin-top: 20px;
 }
 #rivvylink{
   margin-left: 6%;
-}
-.totalpriceinner{
-  text-align: right;
-  padding-right: 15px;
-  padding-top: 10px;
 }
 .options{
   height: 100%;
@@ -59,7 +59,7 @@ body{
   background-color:white;
   text-align: left;
 }
-#address{
+#addresscontainer{
   height: 400px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -112,9 +112,16 @@ body{
   border-bottom: 2px solid rgb(236, 237, 239);
   color: rgb(236, 237, 239);
   font-weight: 400;
+  transition: all 0.5s ease;
 }
 .container{
   height: 100%;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }
 #nut{
   height: 100%;

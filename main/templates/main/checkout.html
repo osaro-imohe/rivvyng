@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <script src="{% static 'main/js/jquery-3.1.1.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/checkout.css' %}">
     <title> </title>
@@ -31,35 +34,36 @@
           <p id="checkoutheadertext">Checkout</p>
         </div>
         <div class="row" id="nut">
-          <form class="col-sm-12 col-lg-6" id="form"  method="post">
+          <form class="col-sm-12 col-lg-6" id="form"  method="POST">
+              {% csrf_token %}
             <script src="https://js.paystack.co/v1/inline.js"></script>
             <div class="col-sm-12" id="addressdivcontainer">
               <div id="addressdiv" class="col-sm-12">
                 <p class="cowboy">Delivery Address</p>
-                <div id="address" class="inputs col-sm-12">
-                  <input type="text" class="inputs col-sm-12 input" placeholder="Address" name="" value="">
-                  <input type="text" class="inputs col-sm-12 input" name="" value="" placeholder="Apt number or company name">
+                <div id="addresscontainer" class="inputs col-sm-12">
+                  <input type="text" class="inputs col-sm-12 input" placeholder="Address" id ="address" name="address" value="">
+                  <input type="text" class="inputs col-sm-12 input" name="aptnumber" id="aptnumber" value="" placeholder="Apt number or company name">
                   <div class="row" id="botbot">
                     <div class="col-sm-6 rowinputcontainer">
-                      <input type="text" id="left" class="inputs col-sm-12" placeholder="Contact name" name="" value="">
+                      <input type="text" id="left" class="inputs col-sm-12" placeholder="Contact name" name="contactname" value="">
                     </div>
                     <div class="col-sm-6 rowinputcontainer">
-                      <input type="text" id="right" class="inputs col-sm-12" placeholder="Phone Number" name="" value="">
+                      <input type="text" id="right" class="inputs col-sm-12" placeholder="Phone Number" name="phonenumber" value="">
                     </div>
                   </div>
-                  <textarea id="textarea" name="name" class="col-sm-12 input" rows="8" cols="80" placeholder="Add any delivery instructions (e.g. 'Knock when you arrive.')"></textarea>
+                  <textarea id="textarea" name="deliveryinstructions" class="col-sm-12 input" rows="8" cols="80" placeholder="Add any delivery instructions (e.g. 'Knock when you arrive.')" value=""></textarea>
                 </div>
                 <p class="cowboy2">Time</p>
                 <div id="timediv" class="col-sm-12">
-                  <p>As soon as possible(25-40mins)</p>
+                  <p>As soon as possible ({{ deliverytime }})</p>
                 </div>
                 <p class="cowboy2">Payment</p>
                 <div id="paymentsdiv col-sm-12">
-                  <button type="button" name="button" class="col-sm-12" id="paymentbutton" onclick="payWithPaystack()">Pay With Card</button>
+                  <button type="button" name="button" class="col-sm-12" id="paymentbutton" onclick="payWithPaystack()"  >Pay With Card</button>
                 </div>
                 <p id="breaker">OR</p>
                 <div id="paymentsdiv2 col-sm-12">
-                  <button type="button" name="button" class="col-sm-12" id="paymentbutton2" >Pay With Cash</button>
+                  <button type="submit" name="button" class="col-sm-12" id="paymentbutton2"  >Pay With Cash</button>
                 </div>
               </div>
             </div>
@@ -83,9 +87,17 @@
                     </div>
                   </div>
                 {%endfor%}
-                <div class="totalprice">
+                <div class="itemdiv col-sm-12">
+                  <div class="row" id="megatron">
+                    <p class="itemquantity">Delivery Price</p>
+                    <p class="itemprice">₦{{ deliveryprice }}&nbsp</p>
+                  </div>
+                  </div>
+                  <div class="totalprice">
                     <p class="totalpriceinner">₦{{ totalprice }}</p>
+                  </div>
                 </div>
+
               {% elif not cartitems %}
                 <p>no items in cart</p>
               {% endif %}
@@ -94,6 +106,7 @@
           </div>
         </div>
       </div>
+
       <script>
               function initMap() {
                 var uluru = {lat: {{store.store_lat}}, lng: {{store.store_lng}} };
@@ -102,47 +115,113 @@
                   var marker = new google.maps.Marker({position: uluru, map: map});}
 
 
-                  function payWithPaystack(){
-                    var handler = PaystackPop.setup({
-                      key: 'pk_live_ba38c47ac58891729dc71f42d93cd5208d83fafc',
-                      email: '{{email}}',
-                      amount: {{totalprice}} + "00",
-                      currency: "NGN",
-                      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                      metadata: {
-                         custom_fields: [
-                            {
-                                display_name: "Name",
-                                variable_name: "Name",
-                                value: "{{ first_name }} {{last_name}}"
-                            },
-                            {
-                                display_name: "Email",
-                                variable_name: "Email",
-                                value: "{{ email }}"
-                            },
-                            // {
-                            //     display_name: "Items",
-                            //     variable_name: "Items",
-                            //     value: "{{ product_list }}"
-                            // }
-                         ]
-                      },
-                      callback: function(response){
-                          alert('success. transaction ref is ' + response.reference);
-                      },
-                      onClose: function(){
-                          return
-                      }
-                    });
-                    handler.openIframe();
-                  }
+                  $('#form').submit(function(e) {
+                    if ($.trim($("#address").val()) === ""){
+                      e.preventDefault();
+                      $("#address").css("border-bottom", "2px solid red");
+                      $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                    }
+                    else if ($.trim($("#aptnumber").val()) === ""){
+                      e.preventDefault();
+                      $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#aptnumber").css("border-bottom", "2px solid red");
+                      $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                    }
+                    else if ($.trim($("#left").val()) === ""){
+                      e.preventDefault();
+                      $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#left").css("border-bottom", "2px solid red");
+                      $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                    }
+                    else if ($.trim($("#right").val()) === ""){
+                      e.preventDefault();
+                      $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#right").css("border-bottom", "2px solid red");
+                    }
+                    else {
+                      $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                      $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                    }
+                  });
+
+              function payWithPaystack(){
+                if ($.trim($("#address").val()) === ""){
+                  $("#address").css("border-bottom", "2px solid red");
+                  $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                }
+                else if ($.trim($("#aptnumber").val()) === ""){
+                  $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#aptnumber").css("border-bottom", "2px solid red");
+                  $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                }
+                else if ($.trim($("#left").val()) === ""){
+                  $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#left").css("border-bottom", "2px solid red");
+                  $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                }
+                else if ($.trim($("#right").val()) === ""){
+                  $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#right").css("border-bottom", "2px solid red");
+                }
+                else {
+                  $("#address").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#aptnumber").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#left").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  $("#right").css("border-bottom", "2px solid rgb(236, 237, 239)");
+                  var handler = PaystackPop.setup({
+                    key: 'pk_test_7c6919f41d4c3c4b016135737f6165748965fe9c',
+                    email: '{{email}}',
+                    amount: {{totalprice}} + "00",
+                    currency: "NGN",
+                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                    metadata: {
+                       custom_fields: [
+                          {
+                              display_name: "Name",
+                              variable_name: "Name",
+                              value: "{{ first_name }} {{last_name}}"
+                          },
+                          {
+                              display_name: "Email",
+                              variable_name: "Email",
+                              value: "{{ email }}"
+                          },
+                          // {
+                          //     display_name: "Items",
+                          //     variable_name: "Items",
+                          //     value: "{{ product_list }}"
+                          // }
+                       ]
+                    },
+                    callback: function(response){
+                        alert('success. transaction ref is ' + response.reference);
+                    },
+                    onClose: function(){
+                        return
+                    }
+                  });
+                  handler.openIframe();
+                }
+
+              }
       </script>
       <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdzDBOcdNaYjQeSZeSSvxnRsKKCgMyKQ&callback=initMap"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </html>
