@@ -197,6 +197,8 @@
        $('.maga2').click(
          function(e){
            e.preventDefault();
+           $('#cartdiv').addClass('cartdivopen').removeClass('cartdivclose');
+           $('#cartdivclosebutton').css("display","block");
            $.ajax({
              type:"GET",
              url:"{% url 'main:cart' %}",
@@ -221,8 +223,6 @@
                }
              }
            });
-           $('#cartdiv').addClass('cartdivopen').removeClass('cartdivclose');
-           $('#cartdivclosebutton').css("display","block");
          });
 
 
