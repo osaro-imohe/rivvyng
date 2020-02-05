@@ -482,6 +482,7 @@ a:hover{
   padding: 40px;
 }
 .ready{
+  position: relative;
   height: 250px;
   margin-top: 50px;
   margin-bottom: 50px;
