@@ -137,9 +137,10 @@
             dataType: "json",
             success:function(data){
               var store_id = $('#query_id').val(),
-              var found = data.some(item => item.id === store_id);
-              if(!found){
-                console.log(data);
+              for(var i=0, i< data.length,i++){
+                if(data[i].id === store_id){
+                  console.log('this store is in there!')
+                }
               }
             }
           });
