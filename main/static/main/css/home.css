@@ -488,10 +488,8 @@ a:hover{
   margin-bottom: 50px;
   background-color: white;
   text-align: center !important;
-}
-.extremecontain{
-  margin-bottom: -250px; /* Put negative height of the footer here */
-  padding-bottom: 250px; 
+  position: relative;
+  z-index: -1;
 }
 .readybuttons{
   height: 100%;
