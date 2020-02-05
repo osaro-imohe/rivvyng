@@ -136,11 +136,8 @@
             url:"{% url 'main:cart' %}",
             dataType: "json",
             success:function(data){
-              store_id = $('#query_id').val()
-              for(var i=0, i< data.length,i++){
-                if(data[i].id === store_id){
-                  console.log('this store is in there!')
-                }
+              for(i=0, i<data.length, i++){
+                console.log(data[i]);
               }
             }
           });
