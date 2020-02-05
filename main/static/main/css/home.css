@@ -488,8 +488,6 @@ a:hover{
   margin-bottom: 50px;
   background-color: white;
   text-align: center !important;
-  position: relative;
-  z-index: -1;
 }
 .readybuttons{
   height: 100%;
