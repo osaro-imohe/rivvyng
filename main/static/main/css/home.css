@@ -65,7 +65,7 @@ body{
   position: relative;
 }
 .howitworkscontainer{
-  height: auto;
+  /* height: auto; */
   padding: 80px 24px !important;
 }
 #orderanything{
@@ -764,7 +764,7 @@ a:hover{
 
       #right
       {
-        height: 50%;
+        height: 50% ;
         }
       }
 
