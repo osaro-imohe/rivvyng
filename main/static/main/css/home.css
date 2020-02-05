@@ -68,6 +68,7 @@ body{
 .howitworkscontainer{
   height: auto;
   position: relative;
+  display: none;
   padding: 80px 24px !important;
 }
 #orderanything{
