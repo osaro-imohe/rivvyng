@@ -136,7 +136,7 @@
             url:"{% url 'main:cart' %}",
             dataType: "json",
             success:function(data){
-              for(i=0, i<data.length, i++){
+              for(i=0, i<data.length, i++,) {
                 console.log(data[i]);
               }
             }
