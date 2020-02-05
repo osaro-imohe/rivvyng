@@ -129,6 +129,7 @@
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script>
       $('#gas').submit(
+        var store_id = $('#query_id').val()
         function(e){
           e.preventDefault();
           $.ajax({
@@ -136,7 +137,6 @@
             url:"{% url 'main:cart' %}",
             dataType: "json",
             success:function(data){
-              var store_id = $('#query_id').val(),
               for(var i=0, i< data.length,i++){
                 if(data[i].id === store_id){
                   console.log('this store is in there!')
