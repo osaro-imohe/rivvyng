@@ -129,15 +129,12 @@
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script>
         $('#gas').submit(
-          var base_url = window.location.origin;
-          var url_ext = "/cart"
-          var url = base_url + url_ext
           function(e){
             e.preventDefault();
             $.ajax({
               type:"GET",
-              url: url,
-              dataType:'json',
+              url:"{% url 'main:cart' %}",
+              dataType: "json",
               success:function(data){
                 console.log(data);
                }
