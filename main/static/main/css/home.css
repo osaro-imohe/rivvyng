@@ -58,6 +58,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   display: inline-block;
+  position: relative;
 }
 #right{
   height: 500px;
@@ -65,7 +66,7 @@ body{
   position: relative;
 }
 .howitworkscontainer{
-  /* height: auto; */
+  height: auto;
   padding: 80px 24px !important;
 }
 #orderanything{
