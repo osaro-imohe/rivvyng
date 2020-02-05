@@ -9,7 +9,7 @@ body{
   text-align: center;
   align-items: center !important;
   overflow-y:scroll;
-  position: absolute;
+  position: relative;
 }
 .options{
   height: 100%;
