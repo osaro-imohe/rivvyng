@@ -61,8 +61,8 @@ body{
 }
 #right{
   height: 500px;
-  vertical-align: middle
-  display: inline-block;
+  vertical-align: middle;
+  position: relative;
 }
 .howitworkscontainer{
   height: auto;
@@ -73,8 +73,10 @@ body{
   left: 0;
   right: 0;
   margin: 0 auto;
-  vertical-align: middle;
-  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 .responsivebox{
   height: 50%;
