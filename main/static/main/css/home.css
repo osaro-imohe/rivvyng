@@ -782,7 +782,7 @@ a:hover{
 
       #left
       {
-        height:  !important;
+        height: 50% !important;
         }
       }
 @media (max-width:767px) {
