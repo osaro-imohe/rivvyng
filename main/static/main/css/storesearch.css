@@ -435,3 +435,9 @@ a:hover{
   /* height: 100% !important; */
   background-color: white;
 }
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
