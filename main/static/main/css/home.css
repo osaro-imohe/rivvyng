@@ -67,6 +67,7 @@ body{
 }
 .howitworkscontainer{
   height: auto;
+  position: relative;
   padding: 80px 24px !important;
 }
 #orderanything{
@@ -405,6 +406,7 @@ a:hover{
 }
 .searchcontainer{
   height: 350px;
+  position: relative;
   margin: 0px !important;
   padding: 30px !important;
   padding-top: 10px !important;
@@ -415,6 +417,7 @@ a:hover{
   background-color: white;
   height: 100%;
   padding-top: 40px;
+  position: relative;
 }
 .searchcontainerimage{
   height: 100%;
@@ -773,6 +776,7 @@ a:hover{
 
 #container
 {
+  position: relative !important;
   padding: 0px !important;
   }
 }
@@ -794,6 +798,7 @@ a:hover{
 
     .searchcontainer
   {
+      position: relative !important;
       padding: 0px !important;
     }
   }
