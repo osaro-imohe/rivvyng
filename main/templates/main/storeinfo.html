@@ -128,18 +128,18 @@
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script>
-        $('#gas').submit(
-          function(e){
-            e.preventDefault();
-            $.ajax({
-              type:"GET",
-              url:"{% url 'main:cart' %}",
-              dataType: "json",
-              success:function(data){
-                console.log(data);
-               }
-            })
-          }
+      $('#gas').submit(
+        function(e){
+          e.preventDefault();
+          $.ajax({
+            type:"GET",
+            url:"{% url 'main:cart' %}",
+            dataType: "json",
+            success:function(data){
+              console.log(data);
+            }
+          });
+        });
 
           // function(e){
           //   e.preventDefault();
