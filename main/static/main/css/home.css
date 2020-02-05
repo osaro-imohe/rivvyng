@@ -779,7 +779,7 @@ a:hover{
 
       #left
       {
-        height: 50% !important;
+        min-height: 50% !important;
         }
       }
 @media (max-width:767px) {
