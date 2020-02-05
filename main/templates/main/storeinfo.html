@@ -129,29 +129,44 @@
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script>
         $('#gas').submit(
+          var base_url = window.location.origin;
+          var url_ext = "/cart"
+          var url = base_url + url_ext
           function(e){
             e.preventDefault();
             $.ajax({
-              type:"POST",
-              url:'addtocart',
-              data:{
-                store_id : $('#query_id').val(),
-                product_id : $('#query_product_id').val(),
-                quantity : $('#query_product_quantity').val(),
-                csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val(),
-              },
-              success:function(){
-                var numberofitemsincart = $('#itemsincart').text();
-                var updateditemnumber = parseInt(numberofitemsincart) + 1;
-                $('#itemsincart').text(updateditemnumber);
-                $('#popupinner').css("display","none");
-                $('#overlay').css("bottom","0px");
-                $('#overlay').css("height","0px");
-                $('#popup').css("padding","0px");
-                $('#jiggy').text('1');
-              }
-            });
-          });
+              type:"GET",
+              url: url,
+              dataType:'json',
+              success:function(data){
+                console.log(data);
+               }
+            })
+          }
+
+          // function(e){
+          //   e.preventDefault();
+          //   $.ajax({
+          //     type:"POST",
+          //     url:'addtocart',
+          //     data:{
+          //       store_id : $('#query_id').val(),
+          //       product_id : $('#query_product_id').val(),
+          //       quantity : $('#query_product_quantity').val(),
+          //       csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val(),
+          //     },
+          //     success:function(){
+          //       var numberofitemsincart = $('#itemsincart').text();
+          //       var updateditemnumber = parseInt(numberofitemsincart) + 1;
+          //       $('#itemsincart').text(updateditemnumber);
+          //       $('#popupinner').css("display","none");
+          //       $('#overlay').css("bottom","0px");
+          //       $('#overlay').css("height","0px");
+          //       $('#popup').css("padding","0px");
+          //       $('#jiggy').text('1');
+          //     }
+          //   });
+          // });
 
          function removeitem(id){
            var pk = id
