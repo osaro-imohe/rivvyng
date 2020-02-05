@@ -137,7 +137,7 @@
             dataType: "json",
             success:function(data){
               var store_id = $('#query_id').val(),
-              const found = data.some(item => item.id === store_id);
+              var found = data.some(item => item.id === store_id);
               if(!found){
                 console.log(data);
               }
