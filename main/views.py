@@ -176,8 +176,14 @@ def storeinfo(request,slug,pk):
         query = Store_detail.objects.get(pk=pk)
         products = query.product_set.all()
         if request.user.is_authenticated:
+            your_json_data = []
             usercartitems = request.user.cart_item_set.all()
             numberofitemsincart = len(usercartitems)
+            for item in usercartitems:
+                storedetail = Store_detail.objects.get(pk = store_id)
+                store_name = str(store.store_name)
+                store_location = str(store.store_location)
+                cart_details = {'store_detail':store_detail,'store_name':store_name,}
         elif not request.user.is_authenticated and request.session.get('cart'):
             cartitems = request.session['cart']
             numberofitemsincart = len(cartitems)
