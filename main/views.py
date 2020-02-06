@@ -180,7 +180,7 @@ def storeinfo(request,slug,pk):
             numberofitemsincart = len(usercartitems)
             usercartitems = request.user.cart_item_set.all()
             numberofitemsincart = len(usercartitems)
-            if not usercartitems:
+            if usercartitems:
                 for item in usercartitems:
                     store_id = item.store_id
                     storedetail = Store_detail.objects.get(pk = store_id)
