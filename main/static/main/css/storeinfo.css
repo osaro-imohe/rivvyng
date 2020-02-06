@@ -44,7 +44,7 @@ body{
   height: 100%;
   border: 1px solid #007bff;
   background-color: white;
-  color: #007bff;
+  color: #51D3F9;
 }
 .rightcreate{
   height: 80px;
@@ -54,7 +54,7 @@ body{
   width: 100%;
   height: 100%;
   border: none;
-  background-color: #007bff;
+  background-color: #51D3F9;
   color: white;
 }
 #createnewcartheader{
