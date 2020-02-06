@@ -192,6 +192,8 @@ def storeinfo(request,slug,pk):
             numberofitemsincart = len(cartitems)
         else:
             numberofitemsincart = 0
+            store_name = ''
+            store_location = ''
         context = {
             "products":products,
             "query":query,
