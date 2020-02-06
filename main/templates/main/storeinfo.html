@@ -138,7 +138,7 @@
             success:function(data,val){
               console.log(data)
               var val = $('#query_id').val()
-              var result = data.filter(x => x.id === val);
+              var result = data.filter(x => x.store_id === val);
               console.log(result);
             }
           });
