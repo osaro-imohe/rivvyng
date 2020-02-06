@@ -33,7 +33,7 @@ body{
   padding-top: 100px;
   padding-bottom: 100px;
 }
-#leftcreate{
+.leftcreate{
   height: 80px;
   padding: 10px;
 }
@@ -44,7 +44,7 @@ body{
   background-color: white;
   color: #007bff;
 }
-#rightcreate{
+.rightcreate{
   height: 80px;
   padding: 10px;
 }
