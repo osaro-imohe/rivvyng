@@ -187,9 +187,9 @@ def storeinfo(request,slug,pk):
                     store = storedetail
                     store_name = str(store.store_name)
                     store_location = str(store.store_location)
-           else:
-               store_name = ''
-               store_location = ''               
+          else:
+              store_name = ''
+              store_location = ''               
         elif not request.user.is_authenticated and request.session.get('cart'):
             cartitems = request.session['cart']
             numberofitemsincart = len(cartitems)
