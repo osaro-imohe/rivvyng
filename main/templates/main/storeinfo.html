@@ -135,9 +135,12 @@
             type:"GET",
             url:"{% url 'main:cart' %}",
             dataType: "json",
-            success:function(data){
-              for(i=0, i<data.length, i++,) {
-                console.log(data[i]);
+            success:function(data,key, val){
+              var val = $('#query_id').val()
+              for (var i = 0; i < data.length; i++) {
+                if(data[i][key] === val){
+                  console.log(data[i]);
+                }
               }
             }
           });
