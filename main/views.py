@@ -181,6 +181,7 @@ def storeinfo(request,slug,pk):
             for item in usercartitems:
                 store_id = item.store_id
                 storedetail = Store_detail.objects.get(pk = store_id)
+                store = storedetail
                 store_name = str(store.store_name)
                 store_location = str(store.store_location)
             context={
