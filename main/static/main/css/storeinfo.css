@@ -22,9 +22,9 @@ body{
   position: absolute;
   left: 0;
   right: 0;
-  top: 25%;
-  bottom: 50%;
-  margin: 0 auto;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   z-index: 500;
   padding: 30px;
   background-color: white;
