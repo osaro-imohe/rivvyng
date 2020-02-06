@@ -139,7 +139,11 @@
               console.log(data)
               var val = $('#query_id').val()
               var result = data.filter(x => x.store_id !== val);
-              console.log(result);
+              if(result.length == 0){
+                console.log('item can be added!');
+              }else{
+                console.log('cart needs to be cleared');
+              }
             }
           });
         });
