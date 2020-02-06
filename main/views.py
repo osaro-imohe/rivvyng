@@ -178,16 +178,14 @@ def storeinfo(request,slug,pk):
         if request.user.is_authenticated:
             usercartitems = request.user.cart_item_set.all()
             numberofitemsincart = len(usercartitems)
+            usercartitems = request.user.cart_item_set.all()
+            numberofitemsincart = len(usercartitems)
             for item in usercartitems:
                 store_id = item.store_id
                 storedetail = Store_detail.objects.get(pk = store_id)
                 store = storedetail
                 store_name = str(store.store_name)
                 store_location = str(store.store_location)
-            context={
-                'store_name':'hello',
-                'store_location':store_location,
-            }
         elif not request.user.is_authenticated and request.session.get('cart'):
             cartitems = request.session['cart']
             numberofitemsincart = len(cartitems)
@@ -196,6 +194,8 @@ def storeinfo(request,slug,pk):
         context = {
             "products":products,
             "query":query,
+            "store_name":store_name,
+            "store_location":store_location,
             "numberofitemsincart":numberofitemsincart,
             }
         return HttpResponse(template.render(context,request))
