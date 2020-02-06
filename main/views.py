@@ -179,6 +179,7 @@ def storeinfo(request,slug,pk):
             usercartitems = request.user.cart_item_set.all()
             numberofitemsincart = len(usercartitems)
             for item in usercartitems:
+                store_id = item.store_id
                 storedetail = Store_detail.objects.get(pk = store_id)
                 store_name = str(store.store_name)
                 store_location = str(store.store_location)
