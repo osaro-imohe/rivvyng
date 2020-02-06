@@ -142,35 +142,35 @@
               if(result.length == 0){
                 console.log('item can be added!');
               }else{
-                console.log('cart needs to be cleared');
+                function(e){
+                  e.preventDefault();
+                  $.ajax({
+                    type:"POST",
+                    url:'addtocart',
+                    data:{
+                      store_id : $('#query_id').val(),
+                      product_id : $('#query_product_id').val(),
+                      quantity : $('#query_product_quantity').val(),
+                      csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success:function(){
+                      var numberofitemsincart = $('#itemsincart').text();
+                      var updateditemnumber = parseInt(numberofitemsincart) + 1;
+                      $('#itemsincart').text(updateditemnumber);
+                      $('#popupinner').css("display","none");
+                      $('#overlay').css("bottom","0px");
+                      $('#overlay').css("height","0px");
+                      $('#popup').css("padding","0px");
+                      $('#jiggy').text('1');
+                    }
+                  });
+                });
               }
             }
           });
         });
 
-          // function(e){
-          //   e.preventDefault();
-          //   $.ajax({
-          //     type:"POST",
-          //     url:'addtocart',
-          //     data:{
-          //       store_id : $('#query_id').val(),
-          //       product_id : $('#query_product_id').val(),
-          //       quantity : $('#query_product_quantity').val(),
-          //       csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val(),
-          //     },
-          //     success:function(){
-          //       var numberofitemsincart = $('#itemsincart').text();
-          //       var updateditemnumber = parseInt(numberofitemsincart) + 1;
-          //       $('#itemsincart').text(updateditemnumber);
-          //       $('#popupinner').css("display","none");
-          //       $('#overlay').css("bottom","0px");
-          //       $('#overlay').css("height","0px");
-          //       $('#popup').css("padding","0px");
-          //       $('#jiggy').text('1');
-          //     }
-          //   });
-          // });
+
 
          function removeitem(id){
            var pk = id
