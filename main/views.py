@@ -185,7 +185,7 @@ def storeinfo(request,slug,pk):
                 store_name = str(store.store_name)
                 store_location = str(store.store_location)
             context={
-                'store_name':store_name,
+                'store_name':'hello',
                 'store_location':store_location,
             }
         elif not request.user.is_authenticated and request.session.get('cart'):
