@@ -18,6 +18,30 @@ body{
   float: right !important;
   margin-right: 5%;
 }
+#createnewcart{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 25%;
+  bottom: 50%;
+  margin: 0 auto;
+  z-index: 500;
+  padding: 30px;
+  background-color: yellow;
+  height: fit-content;
+  text-align: left;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+#createnewcartheader{
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+#createnewcarttext{
+  font-weight: 400;
+  font-family: "stratos","Helvetica Neue",Helvetica,Arial,"Microsoft YaHei","微软雅黑体","Hiragino Sans GB","冬青黑体",sans-serif;
+  color: #2e3333;
+}
 #containagain{
   height: 70px;
   padding: 0px;

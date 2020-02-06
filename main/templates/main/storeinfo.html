@@ -25,7 +25,10 @@
       <div id="cartdivinner">
       </div>
     </div>
-
+    <div id="createnewcart" class="col-sm-12 col-lg-6">
+      <h1 id="createnewcartheader">Create new cart?</h1>
+      <p id="createnewcarttext">This will clear your existing basket with {{storename}} - {{storelocation}}.</p>
+    </div>
     <div id="containagain" class="col-sm-12 row">
       <a id="rivvylink" href="{%url 'main:home'%}">
         <img   class="logo" src="{% static 'main/images/rivvy.png'%}" alt="">
@@ -136,7 +139,6 @@
             url:"{% url 'main:cart' %}",
             dataType: "json",
             success:function(data,val){
-              console.log(data)
               var val = $('#query_id').val()
               var result = data.filter(x => x.store_id !== val);
               if(result.length == 0){
