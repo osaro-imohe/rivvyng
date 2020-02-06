@@ -142,7 +142,6 @@
               if(result.length == 0){
                 console.log('item can be added!');
               }else{
-                function(e){
                   e.preventDefault();
                   $.ajax({
                     type:"POST",
@@ -164,7 +163,6 @@
                       $('#jiggy').text('1');
                     }
                   });
-                });
               }
             }
           });
