@@ -174,7 +174,27 @@ button:focus {
 }
 .items{
   text-align: left;
-  border: 1px solid rgba(217,219,224,0.5);
+  border-width: 1px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-style: solid;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-color: rgba(217, 219, 224, 0.5);
+  border-top-color: rgba(217, 219, 224, 0.5);
+  border-right-color: rgba(217, 219, 224, 0.5);
+  border-bottom-color: rgba(217, 219, 224, 0.5);
+  border-left-color: rgba(217, 219, 224, 0.5);
+  border-image: initial;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
   padding: 15px;
   margin-bottom: 20px;
   height: 150px;
