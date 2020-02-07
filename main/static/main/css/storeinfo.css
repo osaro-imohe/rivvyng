@@ -19,7 +19,7 @@ body{
   margin-right: 5%;
 }
 #createnewcart{
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -496,6 +496,7 @@ h3{
   bottom: 0;
   opacity: 0.4;
   background-color: gray;
+  position: fixed;
 }
 #suboverlay{
   width: 100%;
