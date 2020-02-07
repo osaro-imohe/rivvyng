@@ -193,6 +193,11 @@ def storeinfo(request,slug,pk):
         elif not request.user.is_authenticated and request.session.get('cart'):
             cartitems = request.session['cart']
             numberofitemsincart = len(cartitems)
+            for item in cartitems.values():
+                store_id = item['store_id']
+                store = Store_detail.objects.get(pk = store_id)
+                store_name = str(store.store_name)
+                store_location = str(store.store_location)
         else:
             numberofitemsincart = 0
             store_name = ''
